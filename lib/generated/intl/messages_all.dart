@@ -20,8 +20,8 @@ import 'messages_vi.dart' as messages_vi;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
-  'en': () => new Future.value(null),
-  'vi': () => new Future.value(null),
+  'en': () => new Future.value(),
+  'vi': () => new Future.value(),
 };
 
 MessageLookupByLibrary? _findExact(String localeName) {

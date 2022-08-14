@@ -1,23 +1,17 @@
-import 'package:bloc/bloc.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'config/app_colors.dart';
-import 'data/utils/shared_pref_manager.dart';
 import 'generated/l10n.dart';
-import 'simple_bloc_observer.dart';
-import 'utils/route/app_routing.dart';
+import 'utils/utils_layer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Bloc.observer = SimpleBlocObserver();
-  sharedPrefs.init();
+  await setupInjection();
   runApp(
     DevicePreview(
       enabled: false,
@@ -27,24 +21,55 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  initLang() {
+    switch (SessionUtils.getLanguages) {
+      case 'Tiếng Việt':
+        S.load(
+          const Locale('vi', 'VN'),
+        );
+        break;
+
+      case "English":
+        S.load(
+          const Locale('en', 'EN'),
+        );
+        break;
+
+      case null:
+        S.load(
+          const Locale('vi', 'VN'),
+        );
+        SessionUtils.saveLanguages('Tiếng Việt');
+    }
+  }
+
+  initMetric() {
+    if (SessionUtils.getMetric == null) {
+      SessionUtils.saveMetric(false);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (_,__) => MaterialApp(
-          color: AppColors.primaryColor,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
-          title: 'Weather app',
-          initialRoute: RouteDefine.splashScreen.name,
-          onGenerateRoute: AppRouting.generateRoute,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-        ),
-      );
+  Widget build(BuildContext context) {
+    initLang();
+    initMetric();
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (_, __) => MaterialApp(
+        color: AppColors.primaryColor,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        title: 'Weather app',
+        initialRoute: RouteDefine.splashScreen.name,
+        onGenerateRoute: AppRouting.generateRoute,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+      ),
+    );
+  }
 }

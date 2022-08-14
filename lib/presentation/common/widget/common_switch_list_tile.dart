@@ -46,8 +46,7 @@ class _SwitchListTileState extends State<CommonSwitchListTile> {
       onChanged: widget.onChanged,
       secondary: widget.icon,
       activeColor: widget.activeColor ?? AppColors.primaryColor,
-      inactiveThumbColor:
-          widget.inactiveThumbColor ?? AppColors.recoveredColor,
+      inactiveThumbColor: widget.inactiveThumbColor ?? AppColors.recoveredColor,
       inactiveTrackColor:
           widget.inactiveTrackColor ?? AppColors.recoveredColorShade300,
     );

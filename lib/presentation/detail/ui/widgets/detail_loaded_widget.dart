@@ -1,26 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../config/app_colors.dart';
-import '../../../../data/utils/shared_pref_manager.dart';
-import '../../../../utils/route/app_routing.dart';
+import '../../../../data/weather/weather_data.dart';
+import '../../../../utils/utils_layer.dart';
 import '../../../common/widget/back_app_bar_icon_button.dart';
 import '../../../common/widget/fl_chart.dart';
 import '../../../common/widget/information_widget.dart';
-import '../../bloc/detail_bloc.dart';
-import '../detail_screen.dart';
 
 class DetailLoadedWidget extends StatefulWidget {
   const DetailLoadedWidget({
     Key? key,
-    required this.state,
-    required this.context,
-    required this.detailArguments,
+    required this.cityName,
+    required this.countryName,
+    required this.detailModel,
   }) : super(key: key);
-  final BuildContext context;
-  final DetailLoadedState state;
-  final DetailArguments detailArguments;
+  final String cityName;
+  final String countryName;
+  final DetailModel detailModel;
 
   @override
   _DetailLoadedWidgetState createState() => _DetailLoadedWidgetState();
@@ -41,7 +38,7 @@ class _DetailLoadedWidgetState extends State<DetailLoadedWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isFavorite = widget.detailArguments.favoritesModel?.favorite ?? false;
+    // isFavorite = widget.detailArguments.favoritesModel?.favorite ?? false;
     onRefresh(FirebaseAuth.instance.currentUser);
   }
 
@@ -59,18 +56,18 @@ class _DetailLoadedWidgetState extends State<DetailLoadedWidget> {
                     setState(() {
                       isFavorite = !isFavorite;
                     });
-                    context.read<DetailBloc>().add(
-                          DetailFavoriteButtonPressedEvent(
-                            woeid: widget
-                                    .detailArguments.locationModel?.woeid ??
-                                widget.detailArguments.favoritesModel!.woeid,
-                            favorite: isFavorite,
-                            locationName: widget.state.detailModel?.title ??
-                                widget.detailArguments.favoritesModel!
-                                    .locationName,
-                            docID: widget.detailArguments.favoritesModel!.docID,
-                          ),
-                        );
+                    // context.read<DetailBloc>().add(
+                    //       DetailFavoriteButtonPressedEvent(
+                    //         woeid: widget
+                    //                 .detailArguments.locationModel?.woeid ??
+                    //             widget.detailArguments.favoritesModel!.woeid,
+                    //         favorite: isFavorite,
+                    //         locationName: widget.state.detailModel?.title ??
+                    //             widget.detailArguments.favoritesModel!
+                    //                 .locationName,
+                    //         docID: widget.detailArguments.favoritesModel!.docID,
+                    //       ),
+                    //     );
                   },
                   icon: isFavorite
                       ? Icon(
@@ -96,20 +93,16 @@ class _DetailLoadedWidgetState extends State<DetailLoadedWidget> {
       ),
       body: SingleChildScrollView(
         child: InformationWidget(
-          isMetric: !sharedPrefs.metric!,
-          cityName: widget.state.detailModel!.title,
-          countryName: widget.state.detailModel!.parent.title,
-          humidity: widget.state.detailModel!.consolidated_weather.first.humidity,
-          pressure:
-              widget.state.detailModel!.consolidated_weather.first.airPressure,
-          temperature:
-              widget.state.detailModel!.consolidated_weather.first.theTemp,
-          weatherState: widget
-              .state.detailModel!.consolidated_weather.first.weatherStateName,
-          windSpeed:
-              widget.state.detailModel!.consolidated_weather.first.windSpeed,
+          isMetric: !SessionUtils.getMetric!,
+          cityName: widget.cityName,
+          countryName: widget.countryName,
+          humidity: widget.detailModel.days.first.humidity ?? 0,
+          pressure: widget.detailModel.days.first.pressure ?? 0,
+          temperature: widget.detailModel.days.first.temp ?? 0,
+          weatherState: widget.detailModel.days.first.conditions ?? '',
+          windSpeed: widget.detailModel.days.first.windSpeed ?? 0,
           widget: FLChart(
-            list: widget.state.detailModel!.consolidated_weather,
+            list: widget.detailModel.days,
           ),
         ),
       ),

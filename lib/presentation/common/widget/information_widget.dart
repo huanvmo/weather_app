@@ -37,7 +37,7 @@ class InformationWidget extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            height: 42.h,
+            height: 50.h,
             child: Marquee(
               text: '$cityName - $countryName',
               style: AppTextStyle.fontSize40.copyWith(

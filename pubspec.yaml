@@ -24,7 +24,6 @@ dependencies:
   bloc: ^7.0.0
   build_runner: ^2.1.1
   cloud_firestore: ^2.5.0
-  convex_bottom_bar: ^3.0.0
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
   easy_localization: ^3.0.0
@@ -45,6 +44,7 @@ dependencies:
   flutter_svg: ^0.22.0
   fluttertoast: ^8.0.8
   font_awesome_flutter: ^9.1.0
+  marquee: ^2.2.0
   geolocator: ^7.4.0
   google_sign_in: ^5.0.7
   image_picker: ^0.8.3+2
@@ -52,8 +52,8 @@ dependencies:
   path: ^1.8.0
   shared_preferences: ^2.0.7
   syncfusion_flutter_charts: ^19.2.56
-  marquee: ^2.2.0
-#  html_editor_enhanced: ^2.2.0+1-dev.1
+  get_it: ^7.2.0
+  pretty_dio_logger: ^1.2.0-beta-1
 
 dev_dependencies:
   device_preview: ^0.7.4

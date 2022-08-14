@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/app_text_style.dart';
 
-
 class CurrentColumnWidget extends StatelessWidget {
   const CurrentColumnWidget({
     Key? key,
@@ -12,7 +11,7 @@ class CurrentColumnWidget extends StatelessWidget {
     required this.unit,
   }) : super(key: key);
 
-  final String title, unit,value;
+  final String title, unit, value;
 
   @override
   Widget build(BuildContext context) {

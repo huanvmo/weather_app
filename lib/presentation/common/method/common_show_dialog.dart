@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../config/app_text_style.dart';
+import '../widget/common_elevated_button.dart';
 
-commonShowDialog({
+commonAddDialog({
   required BuildContext context,
   required String title1,
   required Icon icon1,
@@ -40,5 +41,29 @@ commonShowDialog({
       ),
     ),
     barrierDismissible: true,
+  );
+}
+
+showConfirmDialog(
+  BuildContext context, {
+  required String title,
+  required String subTitle,
+  required String textButton,
+  VoidCallback? onPressed,
+}) async {
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(title, textAlign: TextAlign.center),
+      content: Text(subTitle, textAlign: TextAlign.center),
+      actions: [
+        Center(
+          child: CommonElevatedButton(
+            text: textButton,
+            onPressed: onPressed ?? () => Navigator.pop(context),
+          ),
+        )
+      ],
+    ),
   );
 }

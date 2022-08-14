@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../config/app_colors.dart';
 import '../../../config/app_text_style.dart';
-import '../../../data/utils/shared_pref_manager.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/route/app_routing.dart';
+import '../../../utils/utils_layer.dart';
 import '../../common/method/toast.dart';
 import '../../common/widget/back_app_bar_icon_button.dart';
 import '../../common/widget/common_list_tile.dart';
@@ -23,14 +22,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List languages = ['English', 'Tiếng Việt'];
 
   String lang = 'English';
-  String vi = 'Tiếng Việt';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    lang = sharedPrefs.lang ?? lang;
-    metric = sharedPrefs.metric!;
+    lang = SessionUtils.getLanguages!;
+    metric = SessionUtils.getMetric!;
   }
 
   @override
@@ -76,58 +73,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {
                   metric = !metric;
                 });
-                sharedPrefs.setBoolToSF(
-                  metric: metric,
+                SessionUtils.saveMetric(
+                  metric,
                 );
               },
             ),
             CommonDropdownButton(
-              title: Text(
-                S.current.chooseYourLanguages,
-                style: AppTextStyle.fontSize14.copyWith(
-                  fontWeight: FontWeight.bold,
+                title: Text(
+                  S.current.chooseYourLanguages,
+                  style: AppTextStyle.fontSize14.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              string: lang,
-              listString: languages,
-              leadingIcon: const Icon(Icons.language),
-              onChanged: (value) async {
-                if (value == vi) {
-                  setState(() {
-                    lang = value.toString();
+                string: lang,
+                listString: languages,
+                leadingIcon: const Icon(Icons.language),
+                onChanged: (value) async {
+                  switch (value) {
+                    case "Tiếng Việt":
+                      setState(() {
+                        lang = value.toString();
+                      });
+                      SessionUtils.saveLanguages(
+                        lang,
+                      );
+                      await S.load(
+                        const Locale('vi', 'VN'),
+                      );
+                      toast(
+                        msg: S.current.choosed(S.current.tiengViet),
+                      );
+                      lang = value.toString();
 
-                    sharedPrefs.setStringToSF(
-                      lang: lang,
-                    );
-                  });
+                      break;
+                    default:
+                      setState(() {
+                        lang = value.toString();
+                      });
+                      SessionUtils.saveLanguages(
+                        lang,
+                      );
+                      await S.load(
+                        const Locale('en', 'EN'),
+                      );
 
-                  await S.load(
-                    const Locale('vi', 'VN'),
-                  );
-                  toast(
-                    msg: S.current.choosed(S.current.tiengViet),
-                  );
-                } else {
-                  setState(() {
-                    lang = value.toString();
+                      toast(
+                        msg: S.current.choosed(S.current.english),
+                      );
 
-                    sharedPrefs.setStringToSF(
-                      lang: lang,
-                    );
-                  });
-
-                  await S.load(
-                    const Locale('en', 'EN'),
-                  );
-
-                  toast(
-                    msg: S.current.choosed(S.current.english),
-                  );
-                }
-
-                lang = value.toString();
-              },
-            ),
+                      lang = value.toString();
+                  }
+                }),
           ],
         ),
       ),

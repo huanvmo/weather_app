@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/app_colors.dart';
 import '../../../config/app_text_style.dart';
-import '../../../data/model/detail/detail_model.dart';
+import '../../../data/weather/weather_data.dart';
 
 class FLChart extends StatefulWidget {
   const FLChart({
@@ -12,7 +12,7 @@ class FLChart extends StatefulWidget {
     required this.list,
   }) : super(key: key);
 
-  final List<ConsolidatedWeather> list;
+  final List<Days> list;
 
   @override
   _FLChartState createState() => _FLChartState();
@@ -23,6 +23,11 @@ class _FLChartState extends State<FLChart> {
     AppColors.primaryColor,
     AppColors.recoveredColor,
   ];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +56,43 @@ class _FLChartState extends State<FLChart> {
   }
 
   LineChartData mainData() {
+    final List<double> _listTempMax = [];
+    final List<double> _listTempMin = [];
+
+    for (var element in widget.list) {
+      for (int i = 0; i < 6; i++) {
+        _listTempMax.add(element.tempMax ?? 0);
+      }
+    }
+
+    for (var element in widget.list) {
+      for (int i = 0; i < 6; i++) {
+        _listTempMin.add(element.tempMin ?? 0);
+      }
+    }
+
+    final double maxX =
+        _listTempMax.reduce((curr, next) => curr > next ? curr : next);
+    final double minY =
+        _listTempMin.reduce((curr, next) => curr < next ? curr : next);
+
+    if (maxX - minY > 10) {
+      maxX * 1.2;
+      minY / 2;
+    }
     return LineChartData(
       gridData: flGridData(),
       titlesData: flTitlesData(),
       borderData: flBorderData(),
-      maxY: (widget.list.first.maxTemp * 1.2).roundToDouble(),
-      minY: (widget.list.first.minTemp / 2).roundToDouble(),
+      maxY: maxX.roundToDouble(),
+      minY: minY.roundToDouble(),
       lineBarsData: [
         LineChartBarData(
           spots: List.generate(
-            widget.list.length,
+            6,
             (index) => FlSpot(
               index.toDouble(),
-              widget.list.elementAt(index).theTemp.roundToDouble(),
+              widget.list.elementAt(index).temp?.roundToDouble() ?? 0,
             ),
           ),
           isCurved: true,
@@ -162,8 +191,7 @@ class _FLChartState extends State<FLChart> {
       ),
       leftTitles: SideTitles(
         showTitles: true,
-        //TODO y
-        interval: 2,
+        interval: 4,
         getTextStyles: (context, value) => AppTextStyle.fontSize14.copyWith(
           color: AppColors.white,
         ),
@@ -172,5 +200,5 @@ class _FLChartState extends State<FLChart> {
   }
 
   String applicableDate({required int index}) =>
-      widget.list.elementAt(index).applicableDate.substring(6);
+      widget.list.elementAt(index).dateTime?.substring(6) ?? '';
 }

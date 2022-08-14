@@ -1,27 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../data/model/news/news_model.dart';
-import '../../data/model/users/users_model.dart';
-import '../../presentation/account/accout_route.dart';
-import '../../presentation/account_list/account_list_route.dart';
-import '../../presentation/account_update/account_update_route.dart';
-import '../../presentation/detail/detail_route.dart';
-import '../../presentation/detail/ui/detail_screen.dart';
-import '../../presentation/favorites_list/favorites_list_screen_route.dart';
-import '../../presentation/forgot_password/forgot_password_route.dart';
-import '../../presentation/home/home_screen_route.dart';
-import '../../presentation/index/login_signup_index_route.dart';
-import '../../presentation/login_with_email/login_route.dart';
-import '../../presentation/main/main_route.dart';
-import '../../presentation/news_add/news_add_route.dart';
-import '../../presentation/news_detail/news_detail_route.dart';
-import '../../presentation/news_list/news_list_route.dart';
-import '../../presentation/news_management/news_management_route.dart';
-import '../../presentation/news_update/news_update_route.dart';
-import '../../presentation/search/search_route.dart';
-import '../../presentation/settings/settings_route.dart';
-import '../../presentation/signup_with_email/signup_route.dart';
-import '../../presentation/splash/splash_screen_route.dart';
+part of utils_layer;
 
 enum RouteDefine {
   homeScreen,
@@ -65,8 +42,8 @@ class AppRouting {
       RouteDefine.favoritesListScreen.name: (_) =>
           FavoritesListScreenRoute.route,
       RouteDefine.searchScreen.name: (_) => SearchScreenRoute.route,
-      RouteDefine.detailScreen.name: (_) =>
-          DetailScreenRoute.route(settings.arguments as DetailArguments),
+      RouteDefine.detailScreen.name: (_) => DetailScreenRoute.route(
+          argument: settings.arguments as DetailArgument),
       RouteDefine.forgotPasswordScreen.name: (_) =>
           ForgotPasswordScreenRoute.route,
       RouteDefine.loginSignupIndexScreen.name: (_) =>

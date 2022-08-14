@@ -22,4 +22,3 @@ bool isActivated = true;
 String en = S.current.english;
 String vi = S.current.tiengViet;
 List languages = [S.current.english, S.current.tiengViet];
-

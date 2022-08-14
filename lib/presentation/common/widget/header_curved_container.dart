@@ -3,7 +3,7 @@ import '../../../config/app_colors.dart';
 
 class HeaderCurvedContainer extends CustomPainter {
   const HeaderCurvedContainer({
-   this.customColor,
+    this.customColor,
   });
 
   final Color? customColor;

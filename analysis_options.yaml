@@ -22,7 +22,6 @@ linter:
     - avoid_field_initializers_in_const_classes # under review (see #1068)
     - avoid_implementing_value_types
     - avoid_js_rounded_ints # under review (see #1068)
-    - avoid_positional_boolean_parameters
     - avoid_private_typedef_functions # under review (see #1068)
     - avoid_redundant_argument_values
     - avoid_renaming_method_parameters # under review (see #1068)
@@ -31,8 +30,8 @@ linter:
     - avoid_returning_this
     - avoid_setters_without_getters
     - avoid_slow_async_io
-    - avoid_types_on_closure_parameters
-    - avoid_unused_constructor_parameters # under review (see #1068)
+#    - avoid_types_on_closure_parameters
+#    - avoid_unused_constructor_parameters # under review (see #1068)
     - avoid_void_async # under review (see #1068)
     - cancel_subscriptions
 #    - cascade_invocations
@@ -64,7 +63,7 @@ linter:
 #    - prefer_single_quotes
 #    - public_member_api_docs
 #    - sort_constructors_first
-    - sort_pub_dependencies
+#    - sort_pub_dependencies
 #    - sort_unnamed_constructors_first
     - test_types_in_equals
     - throw_in_finally

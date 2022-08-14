@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../generated/l10n.dart';
-import '../../../utils/route/app_routing.dart';
 
+import '../../../utils/utils_layer.dart';
 import 'common_text_button.dart';
 
 class DontHaveAnAccount extends StatelessWidget {

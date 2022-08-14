@@ -1,27 +1,25 @@
-
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../data/model/favorites/favorites_model.dart';
-import '../../../data/model/location/location_model.dart';
-import '../../../data/reposistory/api_repo_impl.dart';
-import '../../../data/utils/cloud_firestore_services/favorites_database_service.dart';
+import '../../../data/firebase/firebase_layer.dart';
+import '../../../data/weather/weather_data.dart';
 
 part 'favorites_list_event.dart';
+
 part 'favorites_list_state.dart';
 
 class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
-  FavoritesListBloc({
-    required this.apiRepoImpl,
-  }) : super(
+  FavoritesListBloc({required this.services})
+      : super(
           FavoritesListInitState(),
         );
 
-  ApiRepoImpl apiRepoImpl;
+  final FavoritesDBServices services;
 
   StreamSubscription? _subscription;
+
   @override
   Stream<FavoritesListState> mapEventToState(FavoritesListEvent event) async* {
     if (event is FavoritesListLoadEvent) {
@@ -36,12 +34,12 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
   Stream<FavoritesListState> _mapFavoritesListLoadEventToState() async* {
     await _subscription?.cancel();
 
-    _subscription =  favorite.getFav(uid: FirebaseAuth.instance.currentUser!.uid).listen(
-          (fav) => add(
-            FavoritesListLoadedEvent(favoritesModel: fav),
-          ),
-        );
-
+    _subscription =
+        services.getFav(uid: FirebaseAuth.instance.currentUser!.uid).listen(
+              (fav) => add(
+                FavoritesListLoadedEvent(favoritesModel: fav),
+              ),
+            );
   }
 
   Stream<FavoritesListState> _mapFavoritesListLoadedEventToState(
@@ -54,7 +52,7 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
   Stream<FavoritesListState> _mapFavoritesListDeleteEventToState(
       FavoritesListDeleteEvent event) async* {
     try {
-      await favorite.deleteFav(
+      await services.deleteFav(
         event.docID,
       );
     } on Exception catch (e) {
@@ -63,5 +61,4 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
       );
     }
   }
-
 }

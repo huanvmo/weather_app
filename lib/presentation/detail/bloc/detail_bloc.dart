@@ -1,18 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/model/detail/detail_model.dart';
-import '../../../data/reposistory/api_repo_impl.dart';
-import '../../../data/utils/cloud_firestore_services/favorites_database_service.dart';
+import '../../../data/firebase/firebase_layer.dart';
+import '../../../data/weather/weather_data.dart';
+import '../../../domain/weather/weather_domain.dart';
+import '../../../utils/utils_layer.dart';
 
 part 'detail_event.dart';
 
 part 'detail_state.dart';
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
-  DetailBloc({required this.apiRepoImpl}) : super(DetailInitState());
+  DetailBloc({
+    required this.useCases,
+    required this.services,
+  }) : super(DetailInitState());
 
-  ApiRepoImpl apiRepoImpl;
+  final WeatherUseCases useCases;
+  final FavoritesDBServices services;
 
   @override
   Stream<DetailState> mapEventToState(DetailEvent event) async* {
@@ -32,8 +37,9 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   }) async* {
     yield DetailLoadingState();
     try {
-      final response = await apiRepoImpl.getDetail(
-        woeid: detailLoadEvent.woeid.toString(),
+      final response = await useCases.getDetail(
+        countryName: detailLoadEvent.countryName,
+        unit: !SessionUtils.getMetric! ? 'metric' : 'us',
       );
 
       final DetailModel detailModel = response;
@@ -52,7 +58,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     required DetailFavoriteButtonPressedEvent detailFavoriteButtonPressedEvent,
   }) async* {
     try {
-      await favorite.favoriteUpdate(
+      await services.favoriteUpdate(
         uid: FirebaseAuth.instance.currentUser!.uid,
         locationName: detailFavoriteButtonPressedEvent.locationName!,
         favorite: detailFavoriteButtonPressedEvent.favorite!,

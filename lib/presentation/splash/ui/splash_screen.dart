@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../data/utils/shared_pref_manager.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../generated/l10n.dart';
-import '../../../utils/route/app_routing.dart';
+import '../../../utils/utils_layer.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -26,38 +24,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  final String vi = 'Tiếng Việt';
-  final String en = 'English';
-
-  initLang() {
-    if (sharedPrefs.lang == vi) {
-      S.load(
-        const Locale('vi', 'VN'),
-      );
-    } else if (sharedPrefs.lang == en) {
-      S.load(
-        const Locale('en', 'EN'),
-      );
-    } else if (sharedPrefs.lang == null) {
-      S.load(
-        const Locale('vi', 'VN'),
-      );
-      sharedPrefs.setStringToSF(lang: vi);
-    }
-  }
-
-  initMetric() {
-    if (sharedPrefs.metric == null) {
-      sharedPrefs.setBoolToSF(metric: false);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     changeScreen();
-    initLang();
-    initMetric();
   }
 
   @override

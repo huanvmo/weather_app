@@ -7,7 +7,7 @@ import '../../../config/app_text_style.dart';
 import '../../../generated/l10n.dart';
 
 class Loading extends StatelessWidget {
- const Loading({Key? key}) : super(key: key);
+  const Loading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,4 +34,3 @@ class Loading extends StatelessWidget {
     );
   }
 }
-

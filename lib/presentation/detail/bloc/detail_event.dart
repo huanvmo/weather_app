@@ -3,9 +3,9 @@ part of 'detail_bloc.dart';
 abstract class DetailEvent {}
 
 class DetailLoadEvent extends DetailEvent {
-  final int? woeid;
+  final String countryName;
 
-  DetailLoadEvent({this.woeid});
+  DetailLoadEvent({required this.countryName});
 }
 
 class DetailFavoriteButtonPressedEvent extends DetailEvent {
