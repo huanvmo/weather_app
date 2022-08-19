@@ -41,6 +41,7 @@ class IndexWidget extends StatelessWidget {
                 style: AppTextStyle.fontSize24.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
@@ -59,20 +60,20 @@ class IndexWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 50.h,
-                child: CommonElevatedButtonIcon(
-                  icon: FontAwesomeIcons.facebook,
-                  text: S.current.continueWithFaceBook,
-                  buttonColor: AppColors.primaryColor,
-                  onPressed: () async {
-                    context.read<IndexBloc>().add(
-                          IndexFacebookLoginPressedEvent(),
-                        );
-                  },
-                ),
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 50.h,
+              //   child: CommonElevatedButtonIcon(
+              //     icon: FontAwesomeIcons.facebook,
+              //     text: S.current.continueWithFaceBook,
+              //     buttonColor: AppColors.primaryColor,
+              //     onPressed: () async {
+              //       context.read<IndexBloc>().add(
+              //             IndexFacebookLoginPressedEvent(),
+              //           );
+              //     },
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: SizedBox(

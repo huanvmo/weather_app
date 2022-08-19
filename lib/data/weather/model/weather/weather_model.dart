@@ -4,13 +4,13 @@ part 'weather_model.g.dart';
 
 @JsonSerializable()
 class WeatherModel {
-  final String name;
-  final List<Weather> weather;
-  final Main main;
-  final Wind wind;
-  final Sys sys;
+  final String? name;
+  final List<Weather>? weather;
+  final Main? main;
+  final Wind? wind;
+  final Sys? sys;
 
-  WeatherModel(this.name, this.weather, this.main, this.wind, this.sys);
+  WeatherModel({this.name, this.weather, this.main, this.wind, this.sys});
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) =>
       _$WeatherModelFromJson(json);

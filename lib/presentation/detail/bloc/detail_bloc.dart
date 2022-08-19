@@ -27,7 +27,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
       );
     } else if (event is DetailFavoriteButtonPressedEvent) {
       yield* _mapDetailFavoriteButtonPressedEventToState(
-        detailFavoriteButtonPressedEvent: event,
+        event: event,
       );
     }
   }
@@ -42,10 +42,16 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
         unit: !SessionUtils.getMetric! ? 'metric' : 'us',
       );
 
+      List<FavoritesModel> _listModel = [];
+      if (_uid.isNotEmpty) {
+        _listModel = await services.getFav(uid: _uid);
+      }
+
       final DetailModel detailModel = response;
 
       yield DetailLoadedState(
         detailModel: detailModel,
+        listFav: _listModel,
       );
     } catch (error) {
       yield DetailFailureState(
@@ -55,20 +61,24 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   }
 
   Stream<DetailState> _mapDetailFavoriteButtonPressedEventToState({
-    required DetailFavoriteButtonPressedEvent detailFavoriteButtonPressedEvent,
+    required DetailFavoriteButtonPressedEvent event,
   }) async* {
     try {
-      await services.favoriteUpdate(
-        uid: FirebaseAuth.instance.currentUser!.uid,
-        locationName: detailFavoriteButtonPressedEvent.locationName!,
-        favorite: detailFavoriteButtonPressedEvent.favorite!,
-        woeid: detailFavoriteButtonPressedEvent.woeid!,
-        docID: detailFavoriteButtonPressedEvent.docID!,
-      );
+      if (event.isFavorite) {
+        await services.favoriteAdd(
+          uid: _uid,
+          favoritesModel: event.model,
+        );
+      } else {
+        await services.deleteFav(
+            uid: _uid, docId: event.model.countryName ?? '');
+      }
     } catch (e) {
       yield DetailFailureState(
         message: e.toString(),
       );
     }
   }
+
+  String get _uid => FirebaseAuth.instance.currentUser?.uid ?? '';
 }

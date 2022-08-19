@@ -73,3 +73,13 @@ class AppRouting {
 extension RouteExt on Object {
   String get name => toString().substring(toString().indexOf('.') + 1);
 }
+
+class DetailArgument {
+  final String countryName;
+  final String cityName;
+
+  const DetailArgument({
+    required this.cityName,
+    required this.countryName,
+  });
+}

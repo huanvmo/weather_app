@@ -34,17 +34,21 @@ class LoginSignupService {
   }
 
   Future<void> googleLogin() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    (await FirebaseAuth.instance.signInWithCredential(credential)).user;
-    FirebaseAuth.instance.currentUser!.displayName.toString();
+      (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+      FirebaseAuth.instance.currentUser!.displayName.toString();
+    } on Exception catch (e) {
+      print('exception: $e');
+    }
   }
 
   Future<void> facebookLogin() async {

@@ -4,18 +4,12 @@ part 'favorites_model.g.dart';
 
 @JsonSerializable()
 class FavoritesModel {
-  final String? locationName;
-  final int? woeid;
-  final String? uid;
-  final bool? favorite;
-  final String docID;
+  final String? countryName;
+  final String? cityName;
 
   FavoritesModel({
-    this.locationName,
-    this.favorite,
-    this.uid,
-    this.woeid,
-    required this.docID,
+     this.countryName,
+     this.cityName,
   });
 
   factory FavoritesModel.fromJson(Map<String, dynamic> json) =>

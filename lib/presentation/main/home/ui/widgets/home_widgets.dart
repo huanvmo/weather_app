@@ -26,13 +26,13 @@ class _HomeWidgetState extends State<HomeWidget> {
         SafeArea(
           child: InformationWidget(
             weatherState:
-                widget.homeLoadedState.weatherModel.weather.first.description,
-            temperature: widget.homeLoadedState.weatherModel.main.temp,
-            pressure: widget.homeLoadedState.weatherModel.main.pressure,
-            humidity: widget.homeLoadedState.weatherModel.main.humidity,
-            countryName: widget.homeLoadedState.weatherModel.sys.country,
-            cityName: widget.homeLoadedState.weatherModel.name,
-            windSpeed: widget.homeLoadedState.weatherModel.wind.speed,
+                widget.homeLoadedState.weatherModel.weather?.first.description ?? '',
+            temperature: widget.homeLoadedState.weatherModel.main?.temp ?? 0,
+            pressure: widget.homeLoadedState.weatherModel.main?.pressure ?? 0,
+            humidity: widget.homeLoadedState.weatherModel.main?.humidity ?? 0,
+            countryName: widget.homeLoadedState.weatherModel.sys?.country ?? '',
+            cityName: widget.homeLoadedState.weatherModel.name ?? '',
+            windSpeed: widget.homeLoadedState.weatherModel.wind?.speed ?? 0,
             widget: const Spacer(),
             iconButton: IconButton(
               onPressed: () {

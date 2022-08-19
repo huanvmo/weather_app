@@ -27,12 +27,3 @@ class DetailScreenRoute {
       );
 }
 
-class DetailArgument {
-  final String countryName;
-  final String cityName;
-
-  const DetailArgument({
-    required this.cityName,
-    required this.countryName,
-  });
-}

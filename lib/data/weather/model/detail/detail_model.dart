@@ -4,16 +4,16 @@ part 'detail_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class DetailModel {
-  final String resolvedAddress;
-  final List<Days> days;
+  final String? resolvedAddress;
+  final List<Days>? days;
 
   factory DetailModel.fromJson(Map<String, dynamic> json) =>
       _$DetailModelFromJson(json);
 
-  DetailModel(
+  DetailModel({
     this.days,
     this.resolvedAddress,
-  );
+  });
 
   Map<String, dynamic> toJson() => _$DetailModelToJson(this);
 }

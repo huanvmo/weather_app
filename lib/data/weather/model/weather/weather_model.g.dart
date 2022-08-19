@@ -7,13 +7,19 @@ part of 'weather_model.dart';
 // **************************************************************************
 
 WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) => WeatherModel(
-      json['name'] as String,
-      (json['weather'] as List<dynamic>)
-          .map((e) => Weather.fromJson(e as Map<String, dynamic>))
+      name: json['name'] as String?,
+      weather: (json['weather'] as List<dynamic>?)
+          ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))
           .toList(),
-      Main.fromJson(json['main'] as Map<String, dynamic>),
-      Wind.fromJson(json['wind'] as Map<String, dynamic>),
-      Sys.fromJson(json['sys'] as Map<String, dynamic>),
+      main: json['main'] == null
+          ? null
+          : Main.fromJson(json['main'] as Map<String, dynamic>),
+      wind: json['wind'] == null
+          ? null
+          : Wind.fromJson(json['wind'] as Map<String, dynamic>),
+      sys: json['sys'] == null
+          ? null
+          : Sys.fromJson(json['sys'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WeatherModelToJson(WeatherModel instance) =>

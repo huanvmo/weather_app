@@ -18,43 +18,34 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
 
   final FavoritesDBServices services;
 
-  StreamSubscription? _subscription;
+  final String _uid = FirebaseAuth.instance.currentUser?.uid ?? '';
 
   @override
   Stream<FavoritesListState> mapEventToState(FavoritesListEvent event) async* {
     if (event is FavoritesListLoadEvent) {
-      yield* _mapFavoritesListLoadEventToState();
-    } else if (event is FavoritesListLoadedEvent) {
       yield* _mapFavoritesListLoadedEventToState(event);
     } else if (event is FavoritesListDeleteEvent) {
       yield* _mapFavoritesListDeleteEventToState(event);
     }
   }
 
-  Stream<FavoritesListState> _mapFavoritesListLoadEventToState() async* {
-    await _subscription?.cancel();
-
-    _subscription =
-        services.getFav(uid: FirebaseAuth.instance.currentUser!.uid).listen(
-              (fav) => add(
-                FavoritesListLoadedEvent(favoritesModel: fav),
-              ),
-            );
-  }
-
   Stream<FavoritesListState> _mapFavoritesListLoadedEventToState(
-      FavoritesListLoadedEvent event) async* {
-    yield FavoritesListLoadedState(
-      favoritesModel: event.favoritesModel,
-    );
+      FavoritesListLoadEvent event) async* {
+    final List<FavoritesModel> _listModel = await services.getFav(uid: _uid);
+    yield (FavoritesListLoadedState(favoritesModel: _listModel));
   }
 
   Stream<FavoritesListState> _mapFavoritesListDeleteEventToState(
       FavoritesListDeleteEvent event) async* {
     try {
       await services.deleteFav(
-        event.docID,
+        docId: event.countryModel,
+        uid: _uid,
       );
+      final List<FavoritesModel> _listModel = await services.getFav(uid: _uid);
+      yield (FavoritesListLoadedState(
+        favoritesModel: _listModel,
+      ));
     } on Exception catch (e) {
       yield FavoritesListFailureState(
         message: e.toString(),

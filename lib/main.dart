@@ -1,4 +1,4 @@
-import 'package:device_preview/device_preview.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,11 +12,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await setupInjection();
+  final  a= await FirebaseAppCheck.instance.getToken();
+await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: a);
+
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => MyApp(), // Wrap your app
-    ),
+      MyApp(),
   );
 }
 
@@ -57,8 +57,6 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (_, __) => MaterialApp(
         color: AppColors.primaryColor,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
         title: 'Weather app',
         initialRoute: RouteDefine.splashScreen.name,
         onGenerateRoute: AppRouting.generateRoute,

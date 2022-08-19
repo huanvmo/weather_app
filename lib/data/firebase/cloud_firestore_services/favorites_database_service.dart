@@ -4,64 +4,47 @@ class FavoritesDBServices {
   final CollectionReference favorite =
       FirebaseFirestore.instance.collection("favorites");
 
-  Future saveFav(
-      {required FavoritesModel favoritesModel, required String uid}) async {
+  Future<List<FavoritesModel>> getFav({required String uid}) async {
     try {
-      await favorite.doc('${favoritesModel.locationName} - $uid').set(
-            favoritesModel.toJson(),
-          );
-      return true;
-    } catch (e) {
-      return false;
+      final List<FavoritesModel> _listModel = [];
+      final favQuery = await favorite.doc(uid).collection("countryName").get();
+
+      await Future.forEach<QueryDocumentSnapshot<Map<String, dynamic>>>(
+          favQuery.docs, (element) {
+        final FavoritesModel _model = FavoritesModel.fromJson(element.data());
+
+        _listModel.add(_model);
+      });
+      return _listModel;
+    } on Exception catch (e) {
+      throw Exception(e);
     }
   }
 
-  Stream<List<FavoritesModel>> getFav({required String uid}) =>
-      favorite.where("uid", isEqualTo: uid).snapshots().map((fav) {
-        return fav.docs
-            .map(
-              (e) => FavoritesModel.fromJson(
-                e.data() as Map<String, dynamic>,
-              ),
-            )
-            .toList();
-      });
-
-  Future deleteFav(String id) async {
+  Future deleteFav({required String uid,required String docId}) async {
     try {
-      await favorite.doc(id).delete();
+      await favorite.doc(uid).collection("countryName").doc(docId).delete();
       return true;
     } catch (e) {
-      return false;
+      throw Exception(e);
     }
   }
 
   Future updateFav(
       {required FavoritesModel favoritesModel, required String uid}) async {
     try {
-      await favorite.doc('${favoritesModel.locationName} - $uid').update(
+      await favorite.doc(uid).update(
             favoritesModel.toJson(),
           );
-      return true;
     } catch (e) {
-      return false;
+      throw Exception(e);
     }
   }
 
   Future<void> favoriteUpdate({
-    required String locationName,
-    required bool favorite,
-    required int woeid,
-    required String docID,
+    required FavoritesModel favoritesModel,
     required String uid,
   }) async {
-    final FavoritesModel favoritesModel = FavoritesModel(
-      locationName: locationName,
-      favorite: favorite,
-      uid: FirebaseAuth.instance.currentUser!.uid,
-      woeid: woeid,
-      docID: docID,
-    );
     await updateFav(
       uid: uid,
       favoritesModel: favoritesModel,
@@ -69,29 +52,19 @@ class FavoritesDBServices {
   }
 
   Future<void> favoriteAdd({
-    required String locationName,
-    required bool favorites,
-    required int woeid,
-    required String docID,
+    required FavoritesModel favoritesModel,
     required String uid,
   }) async {
-    final query = favorite.where(
-      'docID',
-      isEqualTo: docID,
-    );
-    final get = await query.get();
-    if (get.docs.isEmpty) {
-      final FavoritesModel favoritesModel = FavoritesModel(
-        locationName: locationName,
-        uid: uid,
-        favorite: favorites,
-        woeid: woeid,
-        docID: docID,
-      );
-      await saveFav(
-        uid: uid,
-        favoritesModel: favoritesModel,
-      );
+    try {
+      await favorite
+          .doc(uid)
+          .collection('countryName')
+          .doc(favoritesModel.countryName)
+          .set(
+            favoritesModel.toJson(),
+          );
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

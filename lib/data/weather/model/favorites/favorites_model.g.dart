@@ -8,18 +8,12 @@ part of 'favorites_model.dart';
 
 FavoritesModel _$FavoritesModelFromJson(Map<String, dynamic> json) =>
     FavoritesModel(
-      locationName: json['locationName'] as String?,
-      favorite: json['favorite'] as bool?,
-      uid: json['uid'] as String?,
-      woeid: json['woeid'] as int?,
-      docID: json['docID'] as String,
+      countryName: json['countryName'] as String?,
+      cityName: json['cityName'] as String?,
     );
 
 Map<String, dynamic> _$FavoritesModelToJson(FavoritesModel instance) =>
     <String, dynamic>{
-      'locationName': instance.locationName,
-      'woeid': instance.woeid,
-      'uid': instance.uid,
-      'favorite': instance.favorite,
-      'docID': instance.docID,
+      'countryName': instance.countryName,
+      'cityName': instance.cityName,
     };

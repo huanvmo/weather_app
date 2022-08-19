@@ -7,16 +7,16 @@ part of 'detail_model.dart';
 // **************************************************************************
 
 DetailModel _$DetailModelFromJson(Map<String, dynamic> json) => DetailModel(
-      (json['days'] as List<dynamic>)
-          .map((e) => Days.fromJson(e as Map<String, dynamic>))
+      days: (json['days'] as List<dynamic>?)
+          ?.map((e) => Days.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['resolvedAddress'] as String,
+      resolvedAddress: json['resolvedAddress'] as String?,
     );
 
 Map<String, dynamic> _$DetailModelToJson(DetailModel instance) =>
     <String, dynamic>{
       'resolvedAddress': instance.resolvedAddress,
-      'days': instance.days.map((e) => e.toJson()).toList(),
+      'days': instance.days?.map((e) => e.toJson()).toList(),
     };
 
 Days _$DaysFromJson(Map<String, dynamic> json) => Days(

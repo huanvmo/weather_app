@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "90044372363",
+    "firebase_url": "https://weatherproject-2c16f-default-rtdb.firebaseio.com",
     "project_id": "weatherproject-2c16f",
     "storage_bucket": "weatherproject-2c16f.appspot.com"
   },
@@ -14,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "90044372363-amep0t3tbjieqrjki0unbiavp4lkobkj.apps.googleusercontent.com",
+          "client_id": "90044372363-3n4dc2e6tf80157l85v3bernu0f1jq2f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.weather_app",
-            "certificate_hash": "7c172f959ed1742ffe217080ba738ab9e64f42bf"
+            "certificate_hash": "8811b83665d4b3692ca92143b94228a19aab9fcf"
           }
         },
         {

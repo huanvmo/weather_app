@@ -10,6 +10,7 @@ class IndexBloc extends Bloc<IndexEvent, IndexState> {
   IndexBloc({required this.service}) : super(IndexInitState());
 
   final LoginSignupService service;
+
   @override
   Stream<IndexState> mapEventToState(IndexEvent event) async* {
     if (event is IndexLoadEvent) {

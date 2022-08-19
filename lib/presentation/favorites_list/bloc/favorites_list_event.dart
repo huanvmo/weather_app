@@ -10,18 +10,10 @@ class FavoritesListPressedEvent extends FavoritesListEvent {
   FavoritesListPressedEvent({required this.cityName});
 }
 
-class FavoritesListLoadedEvent extends FavoritesListEvent {
-  final List<FavoritesModel> favoritesModel;
-
-  FavoritesListLoadedEvent({
-    required this.favoritesModel,
-  });
-}
-
 class FavoritesListDeleteEvent extends FavoritesListEvent {
-  final String docID;
+  final String countryModel;
 
   FavoritesListDeleteEvent({
-    required this.docID,
+    required this.countryModel,
   });
 }

@@ -9,15 +9,11 @@ class DetailLoadEvent extends DetailEvent {
 }
 
 class DetailFavoriteButtonPressedEvent extends DetailEvent {
-  final bool? favorite;
-  final String? locationName;
-  final int? woeid;
-  final String? docID;
+  final FavoritesModel model;
+  final bool isFavorite;
 
   DetailFavoriteButtonPressedEvent({
-    required this.woeid,
-    required this.favorite,
-    required this.locationName,
-    required this.docID,
+    required this.model,
+    this.isFavorite = true,
   });
 }

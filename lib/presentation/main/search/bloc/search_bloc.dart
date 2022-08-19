@@ -44,24 +44,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapSearchPressedEventToState(
       {required SearchPressedEvent searchPressedEvent}) async* {
     try {
-      if (FirebaseAuth.instance.currentUser != null) {
-        services.getFav(uid: FirebaseAuth.instance.currentUser!.uid).listen(
-              (fav) => add(
-                SearchPressedLoadedEvent(
-                  list: fav,
-                  cityName: searchPressedEvent.cityName,
-                ),
-              ),
-            );
-      } else {
-        final response = await useCases(
-          countryName: searchPressedEvent.cityName,
-        );
+      final response = await useCases(
+        countryName: searchPressedEvent.cityName,
+      );
 
-        yield SearchResultState(
-          countryModel: response,
-        );
-      }
+      yield SearchResultState(
+        countryModel: response,
+      );
     } catch (e) {
       yield SearchFailureState(
         message: "Not found",
@@ -83,10 +72,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapSearchAddEventToState(
       {required SearchAddEvent searchAddEvent}) async* {
     await services.favoriteAdd(
-      locationName: searchAddEvent.locationName,
-      favorites: searchAddEvent.favorite,
-      woeid: searchAddEvent.woeid,
-      docID: searchAddEvent.docID,
+      favoritesModel: searchAddEvent.model,
       uid: FirebaseAuth.instance.currentUser!.uid,
     );
   }

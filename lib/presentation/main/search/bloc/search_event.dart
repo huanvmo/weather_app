@@ -23,15 +23,11 @@ class SearchPressedEvent extends SearchEvent {
 }
 
 class SearchAddEvent extends SearchEvent {
-  final bool favorite;
-  final String locationName;
-  final int woeid;
-  final String docID;
+  final FavoritesModel model;
+  final String docId;
 
   SearchAddEvent({
-    required this.woeid,
-    required this.favorite,
-    required this.locationName,
-    required this.docID,
+    required this.model,
+    required this.docId,
   });
 }

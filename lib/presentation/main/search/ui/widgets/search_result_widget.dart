@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../data/country/country_data.dart';
 import '../../../../../utils/utils_layer.dart';
-import '../../../../detail/detail_route.dart';
 
 class SearchResultWidget extends StatefulWidget {
   const SearchResultWidget({

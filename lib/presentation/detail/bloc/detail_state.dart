@@ -7,10 +7,12 @@ class DetailInitState extends DetailState {}
 class DetailFavoriteButtonPressedState extends DetailState {}
 
 class DetailLoadedState extends DetailState {
-  final DetailModel? detailModel;
+  final DetailModel detailModel;
+  final List<FavoritesModel> listFav;
 
   DetailLoadedState({
-    this.detailModel,
+    required this.detailModel,
+    required this.listFav,
   });
 }
 
