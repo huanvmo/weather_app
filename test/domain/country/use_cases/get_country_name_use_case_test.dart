@@ -25,21 +25,17 @@ void main() {
       ),
     );
 
-    expect(_useCase(countryName: ""),
-        isNotNull);
-    verify(() => _repo.getCountryName(
-        countryName: "")).called(1);
+    expect(_useCase(countryName: ""), isNotNull);
+    verify(() => _repo.getCountryName(countryName: "")).called(1);
   });
 
   test('Return error when fail', () async {
     when(
-      () => _repo.getCountryName(
-          countryName: ""),
+      () => _repo.getCountryName(countryName: ""),
     ).thenThrow(Exception());
 
     try {
-      final void _ =
-          await _useCase(countryName: "");
+      final void _ = await _useCase(countryName: "");
     } catch (_) {
       throwsA(isA<Exception>());
     }

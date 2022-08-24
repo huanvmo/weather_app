@@ -5,7 +5,9 @@ import 'package:weather_app/data/weather/weather_data.dart';
 import 'package:weather_app/domain/weather/weather_domain.dart';
 
 import '../repository/weather_repo_mock.dart';
-class WeatherUseCaseMock extends Mock implements WeatherUseCases{}
+
+class WeatherUseCaseMock extends Mock implements WeatherUseCases {}
+
 void main() {
   final WeatherRepo _repo = WeatherRepoMock();
 
@@ -49,26 +51,24 @@ void main() {
   group("Test get weather use cases", () {
     test('Return response when success', () async {
       when(
-        (() => _repo.getWeather(lat: 1,lon: 1,lang: "")),
+        (() => _repo.getWeather(lat: 1, lon: 1, lang: "")),
       ).thenAnswer(
-            (_) async => Future<WeatherModel>.value(
+        (_) async => Future<WeatherModel>.value(
           WeatherModel(),
         ),
       );
 
-      expect(
-          _useCase.getWeather(lat: 1,lon: 1,lang: ""),
-          isNotNull);
-      verify(() => _repo.getWeather(lat: 1,lon: 1,lang: "")).called(1);
+      expect(_useCase.getWeather(lat: 1, lon: 1, lang: ""), isNotNull);
+      verify(() => _repo.getWeather(lat: 1, lon: 1, lang: "")).called(1);
     });
 
     test('Return error when fail', () async {
       when(
-            () => _repo.getWeather(lat: 1,lon: 1,lang: ""),
+        () => _repo.getWeather(lat: 1, lon: 1, lang: ""),
       ).thenThrow(Exception());
 
       try {
-        final void _ = await _useCase.getWeather(lat: 1,lon: 1,lang: "");
+        final void _ = await _useCase.getWeather(lat: 1, lon: 1, lang: "");
       } catch (_) {
         throwsA(isA<Exception>());
       }

@@ -108,7 +108,7 @@ void main() {
           ),
         );
         verify(
-          () => _getWeatherApi.getWeather(1,1,''),
+          () => _getWeatherApi.getWeather(1, 1, ''),
         ).called(1);
       },
     );
