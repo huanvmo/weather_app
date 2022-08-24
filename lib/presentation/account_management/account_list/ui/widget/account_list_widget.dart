@@ -48,8 +48,9 @@ class _AccountListWidgetState extends State<AccountListWidget> {
             widget.blocContext.read<AccountListBloc>().add(
                   AccountListDeletePressedEvent(
                     email: widget.accountListLoadedState.listUsers
-                        .elementAt(index)
-                        .email,
+                            .elementAt(index)
+                            .email ??
+                        '',
                   ),
                 );
             Navigator.pop(context);
@@ -65,8 +66,8 @@ class _AccountListWidgetState extends State<AccountListWidget> {
               trailing: Text(
                 widget.accountListLoadedState.listUsers
                             .elementAt(index)
-                            .isAdmin ==
-                        true
+                            .isAdmin ??
+                        false
                     ? admin
                     : user,
               ),

@@ -2,20 +2,22 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'users_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class UsersModel {
-  final String name;
-  final String uid;
-  final String email;
-  final bool isAdmin;
-  final bool isActive;
+  final String? name;
+  final String? uid;
+  final String? email;
+  final bool? isAdmin;
+  final bool? isActive;
+  final String? avatarUrl;
 
   UsersModel({
-    required this.name,
-    required this.uid,
-    required this.email,
-    required this.isAdmin,
-    required this.isActive,
+    this.name,
+    this.uid,
+    this.email,
+    this.isAdmin,
+    this.isActive,
+    this.avatarUrl,
   });
 
   factory UsersModel.fromJson(Map<String, dynamic> json) =>

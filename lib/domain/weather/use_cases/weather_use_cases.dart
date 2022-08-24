@@ -5,25 +5,15 @@ class WeatherUseCases {
 
   WeatherUseCases(this._repo);
 
-  Future<WeatherModel> getWeather({
-    required double lat,
-    required double lon,
-    required String lang,
-  }) {
-    return _repo.getWeather(
-      lat: lat,
-      lon: lon,
-      lang: lang,
-    );
+  Future<WeatherModel> getWeather(
+      {required double lat, required double lon, required String lang}) {
+    return _repo.getWeather(lat: lat, lon: lon, lang: lang);
   }
 
   Future<DetailModel> getDetail({
     required String countryName,
     required String unit,
   }) {
-    return _repo.getDetail(
-      countryName: countryName,
-      unit: unit,
-    );
+    return _repo.getDetail(countryName: countryName, unit: unit);
   }
 }

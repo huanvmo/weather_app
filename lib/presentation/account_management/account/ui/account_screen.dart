@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../generated/l10n.dart';
 import '../../../common/method/common_show_dialog.dart';
 import '../../../common/widget/loading_widget.dart';
@@ -24,11 +25,24 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  final RefreshController _refreshController = RefreshController();
+
+  Future<void> _pullToRefresh(BuildContext context) async {
+    context.read<AccountBloc>().add(AccountLoadEvent());
+    _refreshController.refreshCompleted();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,7 +59,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       onPressed: () {
                         Navigator.pop(context);
 
-                        context.read<AccountBloc>().add(AccountLoadEvent(),);
+                        context.read<AccountBloc>().add(
+                              AccountLoadEvent(),
+                            );
                       },
                     );
                   }
@@ -54,7 +70,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   if (state is AccountLoadingState) {
                     return const Loading();
                   } else if (state is AccountLoadedState) {
-                    return AccountLoginWidget(state: state, context: context);
+                    return SmartRefresher(
+                      child: AccountLoginWidget(state: state, context: context),
+                      controller: _refreshController,
+                      onRefresh: () {
+                        _pullToRefresh(context);
+                      },
+                    );
                   }
                   return const Loading();
                 },

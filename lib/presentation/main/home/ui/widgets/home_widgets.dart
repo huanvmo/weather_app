@@ -25,8 +25,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         const CommonCustomPaint(),
         SafeArea(
           child: InformationWidget(
-            weatherState:
-                widget.homeLoadedState.weatherModel.weather?.first.description ?? '',
+            weatherState: widget
+                    .homeLoadedState.weatherModel.weather?.first.description ??
+                '',
             temperature: widget.homeLoadedState.weatherModel.main?.temp ?? 0,
             pressure: widget.homeLoadedState.weatherModel.main?.pressure ?? 0,
             humidity: widget.homeLoadedState.weatherModel.main?.humidity ?? 0,

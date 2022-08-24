@@ -52,7 +52,7 @@ class NewsAddBloc extends Bloc<NewsAddEvent, NewsAddState> {
         title: newsAddPressedEvent.title,
         content: newsAddPressedEvent.content,
         thumbnails: newsAddPressedEvent.thumbnails,
-        author: _usersModel!.name,
+        author: _usersModel?.name ?? '',
         brief: newsAddPressedEvent.brief,
         docID: newsDBServices.news.doc().id,
       );

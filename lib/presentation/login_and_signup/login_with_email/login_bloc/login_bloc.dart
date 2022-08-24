@@ -58,7 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
 
       if (FirebaseAuth.instance.currentUser!.emailVerified) {
-        if (usersModel.isActive == true) {
+        if (usersModel.isActive ?? false) {
           yield LoginSuccessState();
         } else {
           yield LoginFailureState(message: S.current.userNotActive);

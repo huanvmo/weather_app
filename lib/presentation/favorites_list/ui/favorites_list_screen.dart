@@ -41,7 +41,8 @@ class FavoritesListScreen extends StatelessWidget {
                         context.read<FavoritesListBloc>().add(
                               FavoritesListDeleteEvent(
                                 countryModel:
-                                    state.favoritesModel[index].countryName ?? '',
+                                    state.favoritesModel[index].countryName ??
+                                        '',
                               ),
                             );
                       },
@@ -52,8 +53,10 @@ class FavoritesListScreen extends StatelessWidget {
                         context,
                         RouteDefine.detailScreen.name,
                         arguments: DetailArgument(
-                          countryName: state.favoritesModel[index].countryName ?? '',
-                          cityName: state.favoritesModel[index].countryName ?? '',
+                          countryName:
+                              state.favoritesModel[index].countryName ?? '',
+                          cityName:
+                              state.favoritesModel[index].countryName ?? '',
                         ),
                       );
                     },

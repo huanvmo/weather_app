@@ -3,6 +3,7 @@ part of firebase_layer;
 class UsersDBServices {
   final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
+  final _currentUser = FirebaseAuth.instance.currentUser!;
 
   Future saveUser({
     required UsersModel usersModel,
@@ -34,7 +35,7 @@ class UsersDBServices {
     required String email,
   }) async {
     try {
-      await users.doc(email).set(
+      await users.doc(email).update(
             usersModel.toJson(),
           );
       return true;
@@ -69,10 +70,8 @@ class UsersDBServices {
   Future<void> updateUserAvatar({required String photoUrl}) async {
     final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-    final user = FirebaseAuth.instance.currentUser!;
-
     final String storageRef = await firebaseStorage
-        .ref('userAvatar/${user.uid}')
+        .ref('userAvatar/${_currentUser.uid}')
         .putFile(
           File(photoUrl),
         )
@@ -81,11 +80,22 @@ class UsersDBServices {
         .getDownloadURL();
 
     await FirebaseAuth.instance.currentUser!.updatePhotoURL(storageRef);
+    final UsersModel _model = UsersModel(avatarUrl: storageRef);
+    await updateUser(
+      usersModel: _model,
+      email: _currentUser.email ?? '',
+    );
   }
 
   Future<void> updateUserDisplayName({required String userName}) async {
     await FirebaseAuth.instance.currentUser!.updateDisplayName(
       userName,
+    );
+
+    final UsersModel _model = UsersModel(name: userName);
+    await updateUser(
+      usersModel: _model,
+      email: _currentUser.email ?? '',
     );
   }
 }

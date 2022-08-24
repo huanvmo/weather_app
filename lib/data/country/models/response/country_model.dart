@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
 part 'country_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)

@@ -31,8 +31,6 @@ class AccountLoginWidget extends StatefulWidget {
 }
 
 class _AccountLoginWidgetState extends State<AccountLoginWidget> {
-  late final _user = FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
@@ -50,7 +48,7 @@ class _AccountLoginWidgetState extends State<AccountLoginWidget> {
           CircleAvatar(
             radius: 100.r,
             backgroundImage: NetworkImage(
-              _user.currentUser!.photoURL.toString(),
+              widget.state.usersModel.avatarUrl ?? '',
             ),
             child: Container(
               height: 150.h,
@@ -107,7 +105,7 @@ class _AccountLoginWidgetState extends State<AccountLoginWidget> {
           ListTile(
             title: Text(
               S.current.hello(
-                _user.currentUser!.displayName.toString(),
+                widget.state.usersModel.name ?? '',
               ),
               style: AppTextStyle.fontSize40.copyWith(
                 fontWeight: FontWeight.bold,
@@ -128,8 +126,8 @@ class _AccountLoginWidgetState extends State<AccountLoginWidget> {
             child: Column(
               children: [
                 ListTile(
-                  title:
-                      Text('${S.current.email}: ${_user.currentUser!.email}'),
+                  title: Text(
+                      '${S.current.email}: ${widget.state.usersModel.email}'),
                   leading: const Icon(
                     Icons.email,
                   ),
@@ -137,7 +135,7 @@ class _AccountLoginWidgetState extends State<AccountLoginWidget> {
                 SizedBox(
                   height: 10.h,
                 ),
-                widget.state.usersModel.isAdmin
+                widget.state.usersModel.isAdmin ?? false
                     ? Column(
                         children: [
                           SizedBox(

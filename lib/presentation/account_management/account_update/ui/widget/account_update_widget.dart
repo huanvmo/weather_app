@@ -24,8 +24,8 @@ class _AccountUpdateWidgetState extends State<AccountUpdateWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isAdmin = widget.usersModel.isAdmin;
-    isActivated = widget.usersModel.isActive;
+    isAdmin = widget.usersModel.isAdmin ?? false;
+    isActivated = widget.usersModel.isActive ?? false;
   }
 
   @override
@@ -52,10 +52,10 @@ class _AccountUpdateWidgetState extends State<AccountUpdateWidget> {
             context.read<AccountUpdateBloc>().add(
                   AccountUpdatePressedEvent(
                     isAdmin: isAdmin,
-                    email: widget.usersModel.email,
-                    isActive: widget.usersModel.isActive,
-                    name: widget.usersModel.name,
-                    uid: widget.usersModel.uid,
+                    email: widget.usersModel.email ?? '',
+                    isActive: widget.usersModel.isActive ?? false,
+                    name: widget.usersModel.name ?? '',
+                    uid: widget.usersModel.uid ?? '',
                   ),
                 );
           },
@@ -74,11 +74,11 @@ class _AccountUpdateWidgetState extends State<AccountUpdateWidget> {
             });
             context.read<AccountUpdateBloc>().add(
                   AccountUpdatePressedEvent(
-                    isAdmin: widget.usersModel.isAdmin,
-                    email: widget.usersModel.email,
+                    isAdmin: widget.usersModel.isAdmin ?? false,
+                    email: widget.usersModel.email ?? '',
                     isActive: isActivated,
-                    name: widget.usersModel.name,
-                    uid: widget.usersModel.uid,
+                    name: widget.usersModel.name ?? '',
+                    uid: widget.usersModel.uid ?? '',
                   ),
                 );
           },

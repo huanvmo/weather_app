@@ -8,8 +8,8 @@ class FavoritesModel {
   final String? cityName;
 
   FavoritesModel({
-     this.countryName,
-     this.cityName,
+    this.countryName,
+    this.cityName,
   });
 
   factory FavoritesModel.fromJson(Map<String, dynamic> json) =>

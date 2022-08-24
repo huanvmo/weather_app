@@ -13,6 +13,6 @@ class FavoritesListScreenRoute {
         )..add(
             FavoritesListLoadEvent(),
           ),
-        child:  const FavoritesListScreen(),
+        child: const FavoritesListScreen(),
       );
 }

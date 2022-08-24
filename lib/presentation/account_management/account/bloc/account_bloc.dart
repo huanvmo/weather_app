@@ -53,8 +53,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       await services.updateUserDisplayName(
         userName: accountChangeUserNameEvent.userName,
       );
+      final UsersModel _model = await services.getUser(
+          email: FirebaseAuth.instance.currentUser?.email ?? '');
 
-      yield AccountLoadedState(usersModel: _usersModel!);
+      yield AccountLoadedState(usersModel: _model);
     } catch (e) {
       print(e);
       yield AccountFailureState(
@@ -71,6 +73,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       await services.updateUserAvatar(
         photoUrl: accountChangeUserPhotoEvent.photoURL.path,
       );
+
+      _usersModel = await services.getUser(
+          email: FirebaseAuth.instance.currentUser?.email ?? '');
+
       yield AccountLoadedState(usersModel: _usersModel!);
     } on Exception catch (error) {
       yield AccountFailureState(

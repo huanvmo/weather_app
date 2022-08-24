@@ -12,11 +12,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await setupInjection();
-  final  a= await FirebaseAppCheck.instance.getToken();
-await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: a);
+  final a = await FirebaseAppCheck.instance.getToken();
+  await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: a);
 
   runApp(
-      MyApp(),
+    MyApp(),
   );
 }
 
