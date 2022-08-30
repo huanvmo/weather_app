@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../data/country/country_data.dart';
-import '../../../../../utils/utils_layer.dart';
+import '../../../../models/country/country_model.dart';
+import '../../../utils/utils_layer.dart';
+
 
 class SearchResultWidget extends StatefulWidget {
   const SearchResultWidget({

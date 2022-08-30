@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather_app/config/app_colors.dart';
+import 'package:weather_app/generated/l10n.dart';
+import 'package:weather_app/presentation/common/widget/common_elevated_button_icon.dart';
 
-import '../../../../../config/app_colors.dart';
-import '../../../../../generated/l10n.dart';
-import '../../../../common/widget/common_elevated_button_icon.dart';
-import '../../bloc/home_bloc.dart';
+import '../../../../controller/home/home_bloc.dart';
 
 class HomeFailureWidget extends StatelessWidget {
   const HomeFailureWidget({

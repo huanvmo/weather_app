@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/config/app_colors.dart';
+import 'package:weather_app/config/app_text_style.dart';
+import 'package:weather_app/generated/l10n.dart';
+import 'package:weather_app/presentation/common/method/toast.dart';
+import 'package:weather_app/presentation/common/widget/back_app_bar_icon_button.dart';
+import 'package:weather_app/presentation/common/widget/common_list_tile.dart';
+import 'package:weather_app/presentation/common/widget/common_switch_list_tile.dart';
 
-import '../../../config/app_colors.dart';
-import '../../../config/app_text_style.dart';
-import '../../../generated/l10n.dart';
-import '../../../utils/utils_layer.dart';
-import '../../common/method/toast.dart';
-import '../../common/widget/back_app_bar_icon_button.dart';
-import '../../common/widget/common_list_tile.dart';
-import '../../common/widget/common_switch_list_tile.dart';
+import '../utils/utils_layer.dart';
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

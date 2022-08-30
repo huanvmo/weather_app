@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/firebase/firebase_layer.dart';
-import '../../domain/weather/weather_domain.dart';
-import '../../utils/utils_layer.dart';
-import 'bloc/detail_bloc.dart';
+import '../../controller/detail/detail_bloc.dart';
+import '../../models/firebase/firebase_layer.dart';
+import '../utils/utils_layer.dart';
 import 'detail_screen.dart';
 
 class DetailScreenRoute {
@@ -13,9 +12,7 @@ class DetailScreenRoute {
   }) =>
       BlocProvider(
         create: (context) => DetailBloc(
-          useCases: WeatherUseCases(
-            getIt<WeatherRepo>(),
-          ),
+
           services: getIt<FavoritesDBServices>(),
         )..add(
             DetailLoadEvent(countryName: argument.countryName),

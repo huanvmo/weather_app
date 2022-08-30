@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../data/country/country_data.dart';
-import '../../../../data/firebase/firebase_layer.dart';
-import '../../../../data/weather/weather_data.dart';
-import '../../../../domain/country/country_domain.dart';
+import '../../models/country/country_model.dart';
+import '../../models/favorites/favorites_model.dart';
+import '../../models/firebase/firebase_layer.dart';
 
 part 'search_event.dart';
 
@@ -14,15 +13,12 @@ part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({
-    required this.useCases,
     required this.services,
   }) : super(
           SearchInitState(),
         );
 
   final FavoritesDBServices services;
-
-  final GetCountryNameUseCase useCases;
 
   @override
   Stream<SearchState> mapEventToState(SearchEvent event) async* {
@@ -44,12 +40,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapSearchPressedEventToState(
       {required SearchPressedEvent searchPressedEvent}) async* {
     try {
-      final response = await useCases(
-        countryName: searchPressedEvent.cityName,
-      );
+      final response = await Dio().get(
+          'https://restcountries.com/v3.1/name/${searchPressedEvent.cityName}');
+
+      final List<CountryModel> listModel =
+          (response.data as List).map((e) => CountryModel.fromJson(e)).toList();
 
       yield SearchResultState(
-        countryModel: response,
+        countryModel: listModel,
       );
     } catch (e) {
       yield SearchFailureState(
@@ -60,11 +58,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Stream<SearchState> _mapPressedSearchLoadedEvent(
       {required SearchPressedLoadedEvent searchPressedLoadedEvent}) async* {
-    final response = await useCases(
-      countryName: searchPressedLoadedEvent.cityName.toString(),
-    );
+    final response = await Dio().get(
+        'https://restcountries.com/v3.1/name/${searchPressedLoadedEvent.cityName}');
+
+    final List<CountryModel> listModel =
+        (response.data as List).map((e) => CountryModel.fromJson(e)).toList();
+
     yield SearchResultState(
-      countryModel: response,
+      countryModel: listModel,
       favoritesModel: searchPressedLoadedEvent.list,
     );
   }

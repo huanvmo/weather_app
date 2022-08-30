@@ -10,7 +10,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path/path.dart' as path;
 
-import '../weather/weather_data.dart';
+import '../favorites/favorites_model.dart';
 import 'firebase_layer.dart';
 
 export 'models/news/news_model.dart';

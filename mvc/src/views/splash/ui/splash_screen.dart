@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather_app/gen/assets.gen.dart';
 
-import '../../../gen/assets.gen.dart';
-import '../../../utils/utils_layer.dart';
+import '../../utils/utils_layer.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

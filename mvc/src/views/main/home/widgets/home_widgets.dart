@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/presentation/common/widget/common_custom_paint.dart';
+import 'package:weather_app/presentation/common/widget/information_widget.dart';
 
-import '../../../../../utils/utils_layer.dart';
-import '../../../../common/widget/common_custom_paint.dart';
-import '../../../../common/widget/information_widget.dart';
-import '../../bloc/home_bloc.dart';
+import '../../../../controller/home/home_bloc.dart';
+import '../../../utils/utils_layer.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({

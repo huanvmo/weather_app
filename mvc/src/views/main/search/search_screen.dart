@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:weather_app/config/app_colors.dart';
+import 'package:weather_app/gen/assets.gen.dart';
+import 'package:weather_app/generated/l10n.dart';
+import 'package:weather_app/presentation/common/method/common_show_dialog.dart';
+import 'package:weather_app/presentation/common/method/loading_dialog.dart';
+import 'package:weather_app/presentation/common/widget/common_custom_paint.dart';
+import 'package:weather_app/presentation/common/widget/common_text_form_field.dart';
+import 'package:weather_app/presentation/main/search/ui/widgets/search_result_widget.dart';
 
-import '../../../../config/app_colors.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../generated/l10n.dart';
-import '../../../common/method/common_show_dialog.dart';
-import '../../../common/method/loading_dialog.dart';
-import '../../../common/widget/common_custom_paint.dart';
-import '../../../common/widget/common_text_form_field.dart';
-import '../bloc/search_bloc.dart';
-import 'widgets/search_result_widget.dart';
+import '../../../controller/search/search_bloc.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);

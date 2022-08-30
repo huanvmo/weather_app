@@ -2,7 +2,7 @@ part of utils_layer;
 
 class SessionUtils {
   static final SharedPreferencesManager _sharedPref =
-      getIt<SharedPreferencesManager>();
+  SharedPreferencesManager.getInstance();
 
   static void saveLanguages(String languages) => _sharedPref.setString(
         SharedPreferenceKey.languages,

@@ -1,17 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/config/app_colors.dart';
+import 'package:weather_app/generated/l10n.dart';
+import 'package:weather_app/presentation/common/method/common_show_dialog.dart';
+import 'package:weather_app/presentation/common/widget/back_app_bar_icon_button.dart';
+import 'package:weather_app/presentation/common/widget/fl_chart.dart';
+import 'package:weather_app/presentation/common/widget/information_widget.dart';
+import 'package:weather_app/presentation/common/widget/loading_widget.dart';
 
-import '../../config/app_colors.dart';
-import '../../data/weather/weather_data.dart';
-import '../../generated/l10n.dart';
-import '../../utils/utils_layer.dart';
-import '../common/method/common_show_dialog.dart';
-import '../common/widget/back_app_bar_icon_button.dart';
-import '../common/widget/fl_chart.dart';
-import '../common/widget/information_widget.dart';
-import '../common/widget/loading_widget.dart';
-import 'bloc/detail_bloc.dart';
+import '../../controller/detail/detail_bloc.dart';
+import '../../models/favorites/favorites_model.dart';
+import '../utils/utils_layer.dart';
+
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({

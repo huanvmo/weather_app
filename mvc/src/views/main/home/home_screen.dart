@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/presentation/common/widget/loading_widget.dart';
+import 'package:weather_app/presentation/main/home/ui/widgets/home_widgets.dart';
 
-import '../../../common/widget/loading_widget.dart';
-import '../bloc/home_bloc.dart';
+import '../../../controller/home/home_bloc.dart';
 import 'widgets/home_failure_widget.dart';
-import 'widgets/home_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
