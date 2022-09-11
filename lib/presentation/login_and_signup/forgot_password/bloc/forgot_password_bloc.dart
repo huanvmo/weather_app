@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/firebase/firebase_layer.dart';
 import '../../../../generated/l10n.dart';
 
 part 'forgot_password_event.dart';
@@ -9,27 +11,18 @@ part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  ForgotPasswordBloc() : super(ForgotPasswordInitState());
+  ForgotPasswordBloc({required this.services})
+      : super(ForgotPasswordInitState());
+
+  final UsersDBServices services;
 
   @override
   Stream<ForgotPasswordState> mapEventToState(
       ForgotPasswordEvent event) async* {
-    if (event is ForgotPasswordLoadEvent) {
-      yield* _mapForgotPasswordLoadEventToState();
-    } else if (event is ForgotPasswordPressedEvent) {
+    if (event is ForgotPasswordPressedEvent) {
       yield* _mapForgotPasswordPressedEventToState(
         forgotPasswordPressedEvent: event,
       );
-    }
-  }
-
-  Stream<ForgotPasswordState> _mapForgotPasswordLoadEventToState() async* {
-    try {
-      yield ForgotPasswordLoadingState();
-
-      yield ForgotPasswordLoadedState();
-    } catch (e) {
-      yield ForgotPasswordFailureState(message: e.toString());
     }
   }
 
@@ -38,19 +31,19 @@ class ForgotPasswordBloc
     try {
       yield ForgotPasswordLoadingState();
 
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: forgotPasswordPressedEvent.emailText,
+      await services.sendPasswordResetEmail(
+        forgotPasswordPressedEvent.emailText,
       );
 
       yield ForgotPasswordLoadedState();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         yield ForgotPasswordFailureState(
-          message: S.current.userNotFound,
+          message: 'user-not-found',
         );
       } else if (e.code == 'Network-request-failed') {
         yield ForgotPasswordFailureState(
-          message: S.current.networkError,
+          message: 'Network-request-failed',
         );
       }
     }

@@ -1,6 +1,10 @@
 part of 'account_list_bloc.dart';
 
-abstract class AccountListState {}
+abstract class AccountListState extends Equatable{
+
+  @override
+  List<Object?> get props =>[];
+}
 
 class AccountListInitState extends AccountListState {}
 
@@ -15,7 +19,7 @@ class AccountListLoadedState extends AccountListState {
 class AccountListLoadingState extends AccountListState {}
 
 class AccountListFailureState extends AccountListState {
-  String message;
+  final String message;
 
   AccountListFailureState({
     required this.message,

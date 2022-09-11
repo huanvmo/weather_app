@@ -1,7 +1,10 @@
 part of 'login_bloc.dart';
 
-@immutable
-abstract class LoginState {}
+abstract class LoginState extends Equatable{
+
+  @override
+  List<Object?> get props => [];
+}
 
 class LoginInitialState extends LoginState {}
 

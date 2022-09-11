@@ -17,7 +17,7 @@ class UsersDBServices {
     }
   }
 
-  Future getUser({
+  Future<UsersModel> getUser({
     required String email,
   }) async {
     try {
@@ -25,7 +25,7 @@ class UsersDBServices {
       final user = UsersModel.fromJson(data.data() as Map<String, dynamic>);
       return user;
     } catch (e) {
-      return false;
+      throw Exception(e);
     }
   }
 
@@ -98,5 +98,16 @@ class UsersDBServices {
       usersModel: _model,
       email: _currentUser.email ?? '',
     );
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+    }
+    catch (e){
+      throw Exception();
+    }
   }
 }

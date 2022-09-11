@@ -13,7 +13,8 @@ class WeatherUseCases {
   Future<DetailModel> getDetail({
     required String countryName,
     required String unit,
-  }) {
-    return _repo.getDetail(countryName: countryName, unit: unit);
+  }) async {
+
+    return await _repo.getDetail(countryName: countryName, unit: unit);
   }
 }

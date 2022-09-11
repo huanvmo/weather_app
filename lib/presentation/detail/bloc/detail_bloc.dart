@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/firebase/firebase_layer.dart';
@@ -14,10 +18,12 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   DetailBloc({
     required this.useCases,
     required this.services,
+    required this.userId,
   }) : super(DetailInitState());
 
   final WeatherUseCases useCases;
   final FavoritesDBServices services;
+  final String userId;
 
   @override
   Stream<DetailState> mapEventToState(DetailEvent event) async* {
@@ -37,14 +43,15 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   }) async* {
     yield DetailLoadingState();
     try {
-      final response = await useCases.getDetail(
+      final DetailModel response = await useCases.getDetail(
         countryName: detailLoadEvent.countryName,
-        unit: !SessionUtils.getMetric! ? 'metric' : 'us',
+        unit: !SessionUtils.getMetric ? 'metric' : 'us',
       );
 
       List<FavoritesModel> _listModel = [];
-      if (_uid.isNotEmpty) {
-        _listModel = await services.getFav(uid: _uid);
+
+      if (userId.isNotEmpty) {
+        _listModel = await services.getFav(uid: userId);
       }
 
       final DetailModel detailModel = response;
@@ -66,12 +73,12 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     try {
       if (event.isFavorite) {
         await services.favoriteAdd(
-          uid: _uid,
+          uid: userId,
           favoritesModel: event.model,
         );
       } else {
         await services.deleteFav(
-            uid: _uid, docId: event.model.countryName ?? '');
+            uid: userId, docId: event.model.countryName ?? '');
       }
     } catch (e) {
       yield DetailFailureState(
@@ -79,6 +86,4 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
       );
     }
   }
-
-  String get _uid => FirebaseAuth.instance.currentUser?.uid ?? '';
 }

@@ -1,6 +1,9 @@
 part of 'detail_bloc.dart';
 
-abstract class DetailState {}
+abstract class DetailState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class DetailInitState extends DetailState {}
 
@@ -14,11 +17,18 @@ class DetailLoadedState extends DetailState {
     required this.detailModel,
     required this.listFav,
   });
+
+  @override
+  List<Object> get props => <Object>[
+        detailModel,
+        listFav,
+      ];
 }
 
 class DetailLoadingState extends DetailState {}
 
 class DetailFailureState extends DetailState {
-  String message;
+  final String message;
+
   DetailFailureState({required this.message});
 }

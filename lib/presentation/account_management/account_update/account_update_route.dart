@@ -10,9 +10,7 @@ class AccountUpdateScreenRoute {
   static Widget route({required UsersModel usersModel}) => BlocProvider(
         create: (context) => AccountUpdateBloc(
           services: getIt<UsersDBServices>(),
-        )..add(
-            AccountUpdateLoadEvent(),
-          ),
+        ),
         child: AccountUpdateScreen(
           usersModel: usersModel,
         ),

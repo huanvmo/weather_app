@@ -18,9 +18,9 @@ class SessionUtils {
         value: metric,
       );
 
-  static bool? get getMetric => _sharedPref.getBool(
+  static bool get getMetric => _sharedPref.getBool(
         SharedPreferenceKey.metric,
-      );
+      ) ?? false;
 
   static Future<void> get removePrefs async {
     await Future.wait(

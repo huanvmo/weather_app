@@ -6,4 +6,4 @@ class IndexLoadEvent extends IndexEvent {}
 
 class IndexGoogleLoginPressedEvent extends IndexEvent {}
 
-class IndexFacebookLoginPressedEvent extends IndexEvent {}
+// class IndexFacebookLoginPressedEvent extends IndexEvent {}

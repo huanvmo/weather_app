@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,17 +12,19 @@ part 'account_state.dart';
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc({
     required this.services,
+    required this.email,
   }) : super(AccountInitState());
 
   final UsersDBServices services;
+  final String email;
   UsersModel? _usersModel;
 
   @override
   Stream<AccountState> mapEventToState(AccountEvent event) async* {
-    _usersModel = await services.getUser(
-        email: FirebaseAuth.instance.currentUser!.email!);
     if (event is AccountLoadEvent) {
-      yield* _mapLoadEventToState();
+      yield AccountLoadedState(
+        usersModel: await services.getUser(email: email),
+      );
     } else if (event is AccountChangeUserNameEvent) {
       yield* _mapChangeUserNameEventToState(
         accountChangeUserNameEvent: event,
@@ -33,18 +36,6 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     }
   }
 
-  Stream<AccountState> _mapLoadEventToState() async* {
-    try {
-      yield AccountLoadingState();
-
-      yield AccountLoadedState(
-        usersModel: _usersModel!,
-      );
-    } catch (e) {
-      yield AccountFailureState(message: e.toString());
-    }
-  }
-
   Stream<AccountState> _mapChangeUserNameEventToState(
       {required AccountChangeUserNameEvent accountChangeUserNameEvent}) async* {
     try {
@@ -53,8 +44,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       await services.updateUserDisplayName(
         userName: accountChangeUserNameEvent.userName,
       );
-      final UsersModel _model = await services.getUser(
-          email: FirebaseAuth.instance.currentUser?.email ?? '');
+      final UsersModel _model = await services.getUser(email: email);
 
       yield AccountLoadedState(usersModel: _model);
     } catch (e) {
@@ -74,8 +64,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         photoUrl: accountChangeUserPhotoEvent.photoURL.path,
       );
 
-      _usersModel = await services.getUser(
-          email: FirebaseAuth.instance.currentUser?.email ?? '');
+      _usersModel = await services.getUser(email: email);
 
       yield AccountLoadedState(usersModel: _usersModel!);
     } on Exception catch (error) {
@@ -84,4 +73,5 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       );
     }
   }
+
 }

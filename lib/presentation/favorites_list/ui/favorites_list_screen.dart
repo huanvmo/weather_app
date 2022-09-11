@@ -40,7 +40,7 @@ class FavoritesListScreen extends StatelessWidget {
                       onPressed: () async {
                         context.read<FavoritesListBloc>().add(
                               FavoritesListDeleteEvent(
-                                countryModel:
+                                countryName:
                                     state.favoritesModel[index].countryName ??
                                         '',
                               ),

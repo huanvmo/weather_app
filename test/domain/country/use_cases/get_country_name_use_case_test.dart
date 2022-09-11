@@ -15,24 +15,15 @@ void main() {
   });
 
   test('Return response when success', () async {
-    when(
-      (() => _repo.getCountryName(countryName: "")),
-    ).thenAnswer(
-      (_) async => Future<List<CountryModel>>.value(
-        [
-          const CountryModel(),
-        ],
-      ),
-    );
+    when((() => _repo.getCountryName(countryName: ""))).thenAnswer(
+        (_) async => Future<List<CountryModel>>.value([const CountryModel()]));
 
     expect(_useCase(countryName: ""), isNotNull);
     verify(() => _repo.getCountryName(countryName: "")).called(1);
   });
 
   test('Return error when fail', () async {
-    when(
-      () => _repo.getCountryName(countryName: ""),
-    ).thenThrow(Exception());
+    when(() => _repo.getCountryName(countryName: "")).thenThrow(Exception());
 
     try {
       final void _ = await _useCase(countryName: "");

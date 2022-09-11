@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
@@ -16,31 +18,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     required this.loginSignupService,
     required this.usersDBServices,
+    required this.currentEmail,
+    required this.emailVerified,
   }) : super(
           LoginInitialState(),
         );
 
   final LoginSignupService loginSignupService;
   final UsersDBServices usersDBServices;
+  final String currentEmail;
+  final bool emailVerified;
 
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is LoginLoadEvent) {
-      yield* _mapLoginLoadEventToState();
-    } else if (event is LoginPressedEvent) {
+    if (event is LoginPressedEvent) {
       yield* _mapLoginPressedEventToState(loginPressedEvent: event);
-    }
-  }
-
-  Stream<LoginState> _mapLoginLoadEventToState() async* {
-    try {
-      yield LoginLoadingState();
-    } catch (e) {
-      yield LoginFailureState(
-        message: e.toString(),
-      );
     }
   }
 
@@ -49,37 +43,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginLoadingState();
     try {
       await loginSignupService.login(
-        email: loginPressedEvent.email!,
-        password: loginPressedEvent.password!,
+        email: loginPressedEvent.email ?? '',
+        password: loginPressedEvent.password ?? '',
       );
 
       final UsersModel usersModel = await usersDBServices.getUser(
-        email: FirebaseAuth.instance.currentUser!.email!,
+        email: currentEmail,
       );
 
-      if (FirebaseAuth.instance.currentUser!.emailVerified) {
+      if (emailVerified) {
         if (usersModel.isActive ?? false) {
           yield LoginSuccessState();
         } else {
-          yield LoginFailureState(message: S.current.userNotActive);
+          yield LoginFailureState(message: 'User not active');
         }
       } else {
         yield LoginFailureState(
-          message: S.current.userNotVerify,
+          message: 'User not verify',
         );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         yield LoginFailureState(
-          message: S.current.userNotFound,
+          message: 'User not found',
         );
       } else if (e.code == 'wrong-password') {
         yield LoginFailureState(
-          message: S.current.wrongPassword,
+          message: 'Wrong password',
         );
       } else if (e.code == 'Network-request-failed') {
         yield LoginFailureState(
-          message: S.current.networkError,
+          message: 'Network request failed',
         );
       }
     }

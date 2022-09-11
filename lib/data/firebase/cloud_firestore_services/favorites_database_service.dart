@@ -21,10 +21,9 @@ class FavoritesDBServices {
     }
   }
 
-  Future deleteFav({required String uid, required String docId}) async {
+  Future<void> deleteFav({required String uid, required String docId}) async {
     try {
       await favorite.doc(uid).collection("countryName").doc(docId).delete();
-      return true;
     } catch (e) {
       throw Exception(e);
     }

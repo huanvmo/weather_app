@@ -1,13 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'favorites_model.g.dart';
 
 @JsonSerializable()
-class FavoritesModel {
+class FavoritesModel extends Equatable {
   final String? countryName;
   final String? cityName;
 
-  FavoritesModel({
+  const FavoritesModel({
     this.countryName,
     this.cityName,
   });
@@ -16,4 +17,10 @@ class FavoritesModel {
       _$FavoritesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$FavoritesModelToJson(this);
+
+  @override
+  List<Object?> get props => [
+        countryName,
+        cityName,
+      ];
 }

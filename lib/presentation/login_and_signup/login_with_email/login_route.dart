@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/firebase/firebase_layer.dart';
@@ -10,6 +11,8 @@ class LoginScreenRoute {
         create: (context) => LoginBloc(
           loginSignupService: getIt<LoginSignupService>(),
           usersDBServices: getIt<UsersDBServices>(),
+          currentEmail: FirebaseAuth.instance.currentUser?.email ??'',
+          emailVerified: FirebaseAuth.instance.currentUser?.emailVerified ?? false,
         ),
         child: const LoginScreen(),
       );

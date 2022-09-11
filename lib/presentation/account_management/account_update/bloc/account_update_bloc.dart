@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../data/firebase/firebase_layer.dart';
@@ -13,22 +14,9 @@ class AccountUpdateBloc extends Bloc<AccountUpdateEvent, AccountUpdateState> {
 
   @override
   Stream<AccountUpdateState> mapEventToState(AccountUpdateEvent event) async* {
-    if (event is AccountUpdateLoadEvent) {
-      yield* _mapAccountUpdateLoadEventToState();
-    } else if (event is AccountUpdatePressedEvent) {
+    if (event is AccountUpdatePressedEvent) {
       yield* _mapAccountUpdatePressedEventToState(
         accountUpdatePressedEvent: event,
-      );
-    }
-  }
-
-  Stream<AccountUpdateState> _mapAccountUpdateLoadEventToState() async* {
-    try {
-      yield AccountUpdateLoadingState();
-      yield AccountUpdateLoadedState();
-    } catch (e) {
-      yield AccountUpdateFailureState(
-        message: e.toString(),
       );
     }
   }

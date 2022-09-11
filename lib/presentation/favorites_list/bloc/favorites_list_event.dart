@@ -11,9 +11,9 @@ class FavoritesListPressedEvent extends FavoritesListEvent {
 }
 
 class FavoritesListDeleteEvent extends FavoritesListEvent {
-  final String countryModel;
+  final String countryName;
 
   FavoritesListDeleteEvent({
-    required this.countryModel,
+    required this.countryName,
   });
 }
