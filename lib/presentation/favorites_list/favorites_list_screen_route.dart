@@ -10,9 +10,9 @@ import 'ui/favorites_list_screen.dart';
 class FavoritesListScreenRoute {
   static Widget get route => BlocProvider(
         create: (context) => FavoritesListBloc(
-          services: getIt<FavoritesDBServices>(),
-          userId: FirebaseAuth.instance.currentUser?.uid ?? ''
-        )..add(
+            services: getIt<FavoritesDBServices>(),
+            userId: FirebaseAuth.instance.currentUser?.uid ?? '')
+          ..add(
             FavoritesListLoadEvent(),
           ),
         child: const FavoritesListScreen(),

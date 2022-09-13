@@ -138,11 +138,11 @@ void main() {
 
     blocTest<LoginBloc, LoginState>("Emit false state wrong password",
         build: () => LoginBloc(
-          loginSignupService: _loginServices,
-          usersDBServices: _userServices,
-          emailVerified: false,
-          currentEmail: '',
-        ),
+              loginSignupService: _loginServices,
+              usersDBServices: _userServices,
+              emailVerified: false,
+              currentEmail: '',
+            ),
         act: (LoginBloc bloc) async {
           when(() => _loginServices.login(email: '', password: ''))
               .thenThrow(FirebaseAuthException(code: 'wrong-password'));
@@ -152,20 +152,20 @@ void main() {
           );
         },
         expect: () => <LoginState>[
-          LoginLoadingState(),
-          LoginFailureState(message: 'Wrong password'),
-        ],
+              LoginLoadingState(),
+              LoginFailureState(message: 'Wrong password'),
+            ],
         verify: (LoginBloc bloc) {
           verify(() => _loginServices.login(email: '', password: '')).called(1);
         });
 
     blocTest<LoginBloc, LoginState>("Emit false state network fail",
         build: () => LoginBloc(
-          loginSignupService: _loginServices,
-          usersDBServices: _userServices,
-          emailVerified: false,
-          currentEmail: '',
-        ),
+              loginSignupService: _loginServices,
+              usersDBServices: _userServices,
+              emailVerified: false,
+              currentEmail: '',
+            ),
         act: (LoginBloc bloc) async {
           when(() => _loginServices.login(email: '', password: ''))
               .thenThrow(FirebaseAuthException(code: 'Network-request-failed'));
@@ -175,9 +175,9 @@ void main() {
           );
         },
         expect: () => <LoginState>[
-          LoginLoadingState(),
-          LoginFailureState(message: 'Network request fail'),
-        ],
+              LoginLoadingState(),
+              LoginFailureState(message: 'Network request fail'),
+            ],
         verify: (LoginBloc bloc) {
           verify(() => _loginServices.login(email: '', password: '')).called(1);
         });

@@ -9,18 +9,22 @@ class SessionUtils {
         value: languages,
       );
 
-  static String? get getLanguages => _sharedPref.getString(
+  static String get getLanguages =>
+      _sharedPref.getString(
         SharedPreferenceKey.languages,
-      );
+      ) ??
+      'vi';
 
   static void saveMetric(bool metric) => _sharedPref.setBool(
         SharedPreferenceKey.metric,
         value: metric,
       );
 
-  static bool get getMetric => _sharedPref.getBool(
+  static bool get getMetric =>
+      _sharedPref.getBool(
         SharedPreferenceKey.metric,
-      ) ?? false;
+      ) ??
+      false;
 
   static Future<void> get removePrefs async {
     await Future.wait(

@@ -11,8 +11,9 @@ class LoginScreenRoute {
         create: (context) => LoginBloc(
           loginSignupService: getIt<LoginSignupService>(),
           usersDBServices: getIt<UsersDBServices>(),
-          currentEmail: FirebaseAuth.instance.currentUser?.email ??'',
-          emailVerified: FirebaseAuth.instance.currentUser?.emailVerified ?? false,
+          currentEmail: FirebaseAuth.instance.currentUser?.email ?? '',
+          emailVerified:
+              FirebaseAuth.instance.currentUser?.emailVerified ?? false,
         ),
         child: const LoginScreen(),
       );

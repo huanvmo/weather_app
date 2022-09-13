@@ -1,6 +1,6 @@
 part of 'index_bloc.dart';
 
-abstract class IndexState extends Equatable{
+abstract class IndexState extends Equatable {
   @override
   List<Object?> get props => [];
 }

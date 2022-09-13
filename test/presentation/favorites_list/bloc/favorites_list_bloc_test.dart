@@ -23,12 +23,11 @@ import '../../../utils/share_pref_manager_mock.dart';
 void main() {
   final FavoritesDBServices _services = FavoritesDbServicesMock();
 
-
   group('Test load event', () {
     blocTest<FavoritesListBloc, FavoritesListState>("Emit success state",
         build: () => FavoritesListBloc(
               services: _services,
-          userId: '',
+              userId: '',
             ),
         act: (FavoritesListBloc bloc) async {
           when(() => _services.getFav(uid: '')).thenAnswer(
@@ -52,7 +51,7 @@ void main() {
     blocTest<FavoritesListBloc, FavoritesListState>("Emit success state",
         build: () => FavoritesListBloc(
               services: _services,
-          userId: '',
+              userId: '',
             ),
         act: (FavoritesListBloc bloc) async {
           when(() => _services.deleteFav(uid: '', docId: '')).thenAnswer(

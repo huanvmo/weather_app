@@ -21,7 +21,7 @@ class FavoritesListLoadedState extends FavoritesListState {
 class FavoritesListLoadingState extends FavoritesListState {}
 
 class FavoritesListFailureState extends FavoritesListState {
- final String message;
+  final String message;
 
   FavoritesListFailureState({required this.message});
 }

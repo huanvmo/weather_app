@@ -34,17 +34,11 @@ class MyApp extends StatelessWidget {
           const Locale('en', 'EN'),
         );
         break;
-
-      case null:
-        S.load(
-          const Locale('vi', 'VN'),
-        );
-        SessionUtils.saveLanguages('Tiếng Việt');
     }
   }
 
   initMetric() {
-    if (SessionUtils.getMetric == null) {
+    if (SessionUtils.getMetric) {
       SessionUtils.saveMetric(false);
     }
   }

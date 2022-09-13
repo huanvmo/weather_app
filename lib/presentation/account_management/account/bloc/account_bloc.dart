@@ -73,5 +73,4 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       );
     }
   }
-
 }

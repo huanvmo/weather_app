@@ -43,7 +43,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 Icons.settings,
               ),
             ),
-            isMetric: !SessionUtils.getMetric!,
+            isMetric: !SessionUtils.getMetric,
           ),
         ),
       ],

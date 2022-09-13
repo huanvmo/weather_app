@@ -1,6 +1,6 @@
 part of 'account_bloc.dart';
 
-abstract class AccountState extends Equatable{
+abstract class AccountState extends Equatable {
   @override
   List<Object?> get props => [];
 }
@@ -17,8 +17,8 @@ class AccountLoadedState extends AccountState {
   @override
   // TODO: implement props
   List<Object?> get props => [
-    usersModel,
-  ];
+        usersModel,
+      ];
 }
 
 class AccountLoadingState extends AccountState {}

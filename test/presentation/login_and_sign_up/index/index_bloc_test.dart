@@ -41,8 +41,7 @@ void main() {
     blocTest<IndexBloc, IndexState>("Emit fail state",
         build: () => IndexBloc(service: _services),
         act: (IndexBloc bloc) async {
-          when(() => _services.googleLogin())
-              .thenThrow(Exception());
+          when(() => _services.googleLogin()).thenThrow(Exception());
           bloc.add(
             IndexGoogleLoginPressedEvent(),
           );

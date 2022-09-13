@@ -11,7 +11,7 @@ class DetailModel extends Equatable {
   factory DetailModel.fromJson(Map<String, dynamic> json) =>
       _$DetailModelFromJson(json);
 
- const DetailModel({
+  const DetailModel({
     this.days,
     this.resolvedAddress,
   });
@@ -20,13 +20,13 @@ class DetailModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    days,
-    resolvedAddress,
-  ];
+        days,
+        resolvedAddress,
+      ];
 }
 
 @JsonSerializable(explicitToJson: true)
-class Days extends Equatable{
+class Days extends Equatable {
   @JsonKey(name: "datetime")
   final String? dateTime;
   final int? datetimeEpoch;
@@ -59,14 +59,14 @@ class Days extends Equatable{
 
   @override
   List<Object?> get props => [
-    dateTime,
-    datetimeEpoch,
-    humidity,
-    pressure,
-    temp,
-    tempMax,
-    tempMin,
-    conditions,
-    windSpeed,
-  ];
+        dateTime,
+        datetimeEpoch,
+        humidity,
+        pressure,
+        temp,
+        tempMax,
+        tempMin,
+        conditions,
+        windSpeed,
+      ];
 }

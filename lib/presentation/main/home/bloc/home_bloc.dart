@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../../data/weather/weather_data.dart';
@@ -14,17 +16,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.useCases}) : super(HomeInitState());
   final WeatherUseCases useCases;
 
+  @visibleForTesting
+  bool isTesting = false;
+  double latitude = 0;
+  double longitude = 0;
+  String languages = '';
+
+  void testing() {
+    isTesting = true;
+  }
+
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     if (event is HomeLoadEvent) {
       try {
         yield HomeLoadingState();
-        final position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
+
+        if (!isTesting) {
+          final position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high);
+          latitude = position.latitude;
+          longitude = position.longitude;
+          languages = SessionUtils.getLanguages == vi ? "vi" : 'en';
+        }
+
         final response = await useCases.getWeather(
-            lat: position.latitude,
-            lon: position.longitude,
-            lang: SessionUtils.getLanguages == vi ? "vi" : 'en');
+          lat: latitude,
+          lon: longitude,
+          lang: languages,
+        );
+
         yield HomeLoadedState(weatherModel: response);
       } catch (e) {
         yield HomeFailureState(message: e.toString());
@@ -38,13 +59,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       {required HomeChangeEvent homeChangeEvent}) async* {
     try {
       yield HomeLoadingState();
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+
+      if (!isTesting) {
+        final position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
+        latitude = position.latitude;
+        longitude = position.longitude;
+      }
 
       final response = await useCases.getWeather(
-        lat: position.latitude,
-        lon: position.longitude,
+        lat: latitude,
+        lon: longitude,
         lang: homeChangeEvent.lang.toString(),
       );
 

@@ -124,7 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               body: SingleChildScrollView(
                 child: InformationWidget(
-                  isMetric: !SessionUtils.getMetric!,
+                  isMetric: !SessionUtils.getMetric,
                   cityName: widget.cityName,
                   countryName: widget.countryName,
                   humidity: state.detailModel.days?.first.humidity ?? 0,

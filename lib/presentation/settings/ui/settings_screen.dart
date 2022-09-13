@@ -26,8 +26,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    lang = SessionUtils.getLanguages!;
-    metric = SessionUtils.getMetric!;
+    lang = SessionUtils.getLanguages;
+    metric = SessionUtils.getMetric;
   }
 
   @override

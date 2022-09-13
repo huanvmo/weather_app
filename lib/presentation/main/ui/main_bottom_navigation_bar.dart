@@ -66,9 +66,9 @@ class _MainScreenState extends State<MainScreen>
             providers: [
               BlocProvider(
                 create: (context) => AccountBloc(
-                  services: getIt<UsersDBServices>(),
-                  email: FirebaseAuth.instance.currentUser?.email ?? ''
-                )..add(
+                    services: getIt<UsersDBServices>(),
+                    email: FirebaseAuth.instance.currentUser?.email ?? '')
+                  ..add(
                     AccountLoadEvent(),
                   ),
               ),

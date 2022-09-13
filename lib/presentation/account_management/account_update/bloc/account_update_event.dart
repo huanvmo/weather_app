@@ -2,7 +2,6 @@ part of 'account_update_bloc.dart';
 
 abstract class AccountUpdateEvent {}
 
-
 class AccountUpdatePressedEvent extends AccountUpdateEvent {
   final bool isAdmin;
   final String email;

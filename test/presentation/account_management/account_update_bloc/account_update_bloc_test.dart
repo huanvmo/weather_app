@@ -37,11 +37,14 @@ void main() {
             ),
         act: (AccountUpdateBloc bloc) async {
           when(() => _services.updateUser(
-              email: '', usersModel: const UsersModel(email: '',
-            uid: '',
-            isActive: false,
-            isAdmin: false,
-            name: '',))).thenAnswer(
+              email: '',
+              usersModel: const UsersModel(
+                email: '',
+                uid: '',
+                isActive: false,
+                isAdmin: false,
+                name: '',
+              ))).thenAnswer(
             (_) async => Future.value(),
           );
           bloc.add(
@@ -59,24 +62,30 @@ void main() {
             ],
         verify: (AccountUpdateBloc bloc) {
           verify(() => _services.updateUser(
-              email: '', usersModel: const UsersModel(email: '',
-            uid: '',
-            isActive: false,
-            isAdmin: false,
-            name: '',))).called(1);
+              email: '',
+              usersModel: const UsersModel(
+                email: '',
+                uid: '',
+                isActive: false,
+                isAdmin: false,
+                name: '',
+              ))).called(1);
         });
 
     blocTest<AccountUpdateBloc, AccountUpdateState>("Emit fail state",
         build: () => AccountUpdateBloc(
-          services: _services,
-        ),
+              services: _services,
+            ),
         act: (AccountUpdateBloc bloc) async {
           when(() => _services.updateUser(
-              email: '', usersModel: const UsersModel(email: '',
-            uid: '',
-            isActive: false,
-            isAdmin: false,
-            name: '',))).thenThrow(Exception());
+              email: '',
+              usersModel: const UsersModel(
+                email: '',
+                uid: '',
+                isActive: false,
+                isAdmin: false,
+                name: '',
+              ))).thenThrow(Exception());
           bloc.add(
             AccountUpdatePressedEvent(
               email: '',
@@ -88,15 +97,18 @@ void main() {
           );
         },
         expect: () => <AccountUpdateState>[
-          AccountUpdateFailureState(message: ''),
-        ],
+              AccountUpdateFailureState(message: ''),
+            ],
         verify: (AccountUpdateBloc bloc) {
           verify(() => _services.updateUser(
-              email: '', usersModel: const UsersModel(email: '',
-            uid: '',
-            isActive: false,
-            isAdmin: false,
-            name: '',))).called(1);
+              email: '',
+              usersModel: const UsersModel(
+                email: '',
+                uid: '',
+                isActive: false,
+                isAdmin: false,
+                name: '',
+              ))).called(1);
         });
   });
 }

@@ -8,10 +8,11 @@ import 'ui/forgor_password_screen.dart';
 
 class ForgotPasswordScreenRoute {
   static Widget get route => BlocProvider(
-        create: (context) => ForgotPasswordBloc(services: getIt<UsersDBServices>())
-          ..add(
-            ForgotPasswordLoadEvent(),
-          ),
+        create: (context) =>
+            ForgotPasswordBloc(services: getIt<UsersDBServices>())
+              ..add(
+                ForgotPasswordLoadEvent(),
+              ),
         child: const ForgotPasswordScreen(),
       );
 }

@@ -101,12 +101,11 @@ class UsersDBServices {
   }
 
   Future<void> sendPasswordResetEmail(String email) async {
-    try{
+    try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: email,
       );
-    }
-    catch (e){
+    } catch (e) {
       throw Exception();
     }
   }

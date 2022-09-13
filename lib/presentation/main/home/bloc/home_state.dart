@@ -1,6 +1,9 @@
 part of 'home_bloc.dart';
 
-abstract class HomeState {}
+abstract class HomeState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class HomeInitState extends HomeState {}
 
@@ -13,7 +16,7 @@ class HomeLoadedState extends HomeState {
 class HomeLoadingState extends HomeState {}
 
 class HomeFailureState extends HomeState {
-  String message;
+  final String message;
 
   HomeFailureState({required this.message});
 }

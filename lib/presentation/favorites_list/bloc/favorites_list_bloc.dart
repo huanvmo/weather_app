@@ -45,7 +45,8 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
         docId: event.countryName,
         uid: userId,
       );
-      final List<FavoritesModel> _listModel = await services.getFav(uid: userId);
+      final List<FavoritesModel> _listModel =
+          await services.getFav(uid: userId);
       yield (FavoritesListLoadedState(
         favoritesModel: _listModel,
       ));
@@ -55,5 +56,4 @@ class FavoritesListBloc extends Bloc<FavoritesListEvent, FavoritesListState> {
       );
     }
   }
-
 }

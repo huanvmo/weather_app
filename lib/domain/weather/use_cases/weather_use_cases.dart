@@ -14,7 +14,6 @@ class WeatherUseCases {
     required String countryName,
     required String unit,
   }) async {
-
     return await _repo.getDetail(countryName: countryName, unit: unit);
   }
 }

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'users_model.g.dart';
 
 @JsonSerializable(includeIfNull: false)
-class UsersModel extends Equatable{
+class UsersModel extends Equatable {
   final String? name;
   final String? uid;
   final String? email;
@@ -28,11 +28,11 @@ class UsersModel extends Equatable{
 
   @override
   List<Object?> get props => [
-    name,
-    uid,
-    email,
-    isAdmin,
-    isActive,
-    avatarUrl,
-  ];
+        name,
+        uid,
+        email,
+        isAdmin,
+        isActive,
+        avatarUrl,
+      ];
 }

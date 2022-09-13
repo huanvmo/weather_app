@@ -54,15 +54,15 @@ void main() {
   group('Test change user name event', () {
     blocTest<AccountBloc, AccountState>("Emit success state",
         build: () => AccountBloc(
-          services: _services,
-          email: '',
-        ),
+              services: _services,
+              email: '',
+            ),
         act: (AccountBloc bloc) async {
           when(() => _services.updateUserDisplayName(userName: '')).thenAnswer(
-                (_) async => Future.value(),
+            (_) async => Future.value(),
           );
           when(() => _services.getUser(email: '')).thenAnswer(
-                (_) async => const UsersModel(),
+            (_) async => const UsersModel(),
           );
 
           bloc.add(
@@ -70,9 +70,9 @@ void main() {
           );
         },
         expect: () => <AccountState>[
-          AccountLoadingState(),
-          AccountLoadedState(usersModel: const UsersModel()),
-        ],
+              AccountLoadingState(),
+              AccountLoadedState(usersModel: const UsersModel()),
+            ],
         verify: (AccountBloc bloc) {
           verify(() => _services.getUser(email: '')).called(1);
           verify(() => _services.updateUserDisplayName(userName: '')).called(1);
@@ -80,9 +80,9 @@ void main() {
 
     blocTest<AccountBloc, AccountState>("Emit fail state",
         build: () => AccountBloc(
-          services: _services,
-          email: '',
-        ),
+              services: _services,
+              email: '',
+            ),
         act: (AccountBloc bloc) async {
           when(() => _services.updateUserDisplayName(userName: ''))
               .thenThrow(Exception());
@@ -92,9 +92,9 @@ void main() {
           );
         },
         expect: () => <AccountState>[
-          AccountLoadingState(),
-          AccountFailureState(message: ''),
-        ],
+              AccountLoadingState(),
+              AccountFailureState(message: ''),
+            ],
         verify: (AccountBloc bloc) {
           verify(() => _services.updateUserDisplayName(userName: '')).called(1);
         });
@@ -102,15 +102,15 @@ void main() {
   group('Test change user photo event', () {
     blocTest<AccountBloc, AccountState>("Emit success state",
         build: () => AccountBloc(
-          services: _services,
-          email: '',
-        ),
+              services: _services,
+              email: '',
+            ),
         act: (AccountBloc bloc) async {
           when(() => _services.updateUserAvatar(photoUrl: '')).thenAnswer(
-                (_) async => Future.value(),
+            (_) async => Future.value(),
           );
           when(() => _services.getUser(email: '')).thenAnswer(
-                (_) async => const UsersModel(),
+            (_) async => const UsersModel(),
           );
 
           bloc.add(
@@ -118,9 +118,9 @@ void main() {
           );
         },
         expect: () => <AccountState>[
-          AccountLoadingState(),
-          AccountLoadedState(usersModel: const UsersModel()),
-        ],
+              AccountLoadingState(),
+              AccountLoadedState(usersModel: const UsersModel()),
+            ],
         verify: (AccountBloc bloc) {
           verify(() => _services.getUser(email: '')).called(1);
           verify(() => _services.updateUserAvatar(photoUrl: '')).called(1);
@@ -128,9 +128,9 @@ void main() {
 
     blocTest<AccountBloc, AccountState>("Emit fail state",
         build: () => AccountBloc(
-          services: _services,
-          email: '',
-        ),
+              services: _services,
+              email: '',
+            ),
         act: (AccountBloc bloc) async {
           when(() => _services.updateUserAvatar(photoUrl: ''))
               .thenThrow(Exception());
@@ -140,9 +140,9 @@ void main() {
           );
         },
         expect: () => <AccountState>[
-          AccountLoadingState(),
-          AccountFailureState(message: ''),
-        ],
+              AccountLoadingState(),
+              AccountFailureState(message: ''),
+            ],
         verify: (AccountBloc bloc) {
           verify(() => _services.updateUserAvatar(photoUrl: '')).called(1);
         });
