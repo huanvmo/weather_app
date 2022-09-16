@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
@@ -42,11 +43,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         yield SignupFailureState(
-          message: S.current.emailAlreadyInUse,
+          message: 'email-already-in-use',
         );
       } else if (e.code == 'network-request-failed') {
         yield SignupFailureState(
-          message: S.current.networkError,
+          message: 'network-request-failed',
         );
       }
     }

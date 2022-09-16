@@ -19,3 +19,16 @@ This my weather app
 3. In home screen, you can see your weather current location
 4. In search screen, you can search locaion and details of the places you have found
 5. in Account screen, you can change your name and avatar
+
+## Run coverage test
+
+flutter test --coverage
+
+perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\lcov --remove coverage/lcov.info 'lib\config\**' '
+lib\gen\**' 'lib\generated\**' 'lib\L110n' 'lib/**/*.g.dart' 'lib/**/model/*' 'lib/**/models/*' '
+lib/**/*state.dart' 'lib/**/*route.dart' 'lib/**/*event.dart' 'lib/**/*screen.dart' 'lib/**/*
+screen.dart' 'lib/presentation/common/**' 'lib/**/*screen.dart' 'lib/presentation/main/ui**' 'lib/**
+/*widget.dart' 'lib/**/*widgets.dart' 'lib\presentation\main\news\**' 'lib\utils\**' '
+lib\data\firebase\**' -o coverage/new_lcov.info
+
+perl C:\ProgramData\chocolatey\lib\lcov\tools\bin\genhtml coverage/new_lcov.info --output=coverage
