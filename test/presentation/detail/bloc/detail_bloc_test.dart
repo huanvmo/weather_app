@@ -31,24 +31,16 @@ void main() {
   });
   group('Test load event', () {
     blocTest<DetailBloc, DetailState>("Emit success state",
-        build: () => DetailBloc(
-              useCases: _useCase,
-              services: _services,
-              userId: '1',
-            ),
+        build: () =>
+            DetailBloc(useCases: _useCase, services: _services, userId: '1'),
         act: (DetailBloc bloc) async {
           when(() => _useCase.getDetail(unit: "metric", countryName: ""))
               .thenAnswer((_) async => const DetailModel());
 
-          when(() => _services.getFav(uid: '1')).thenAnswer(
-            (_) async => [const FavoritesModel()],
-          );
+          when(() => _services.getFav(uid: '1'))
+              .thenAnswer((_) async => [const FavoritesModel()]);
 
-          bloc.add(
-            DetailLoadEvent(
-              countryName: '',
-            ),
-          );
+          bloc.add(DetailLoadEvent(countryName: ''));
         },
         expect: () => <DetailState>[
               DetailLoadingState(),
@@ -66,31 +58,21 @@ void main() {
 
     blocTest<DetailBloc, DetailState>(
       "Emit fail state",
-      build: () => DetailBloc(
-        useCases: _useCase,
-        services: _services,
-        userId: '',
-      ),
+      build: () =>
+          DetailBloc(useCases: _useCase, services: _services, userId: ''),
       act: (DetailBloc bloc) async {
         when(() => _useCase.getDetail(unit: "metric", countryName: ""))
             .thenThrow(Exception());
-        bloc.add(DetailLoadEvent(
-          countryName: '',
-        ));
+        bloc.add(DetailLoadEvent(countryName: ''));
       },
-      expect: () => <DetailState>[
-        DetailLoadingState(),
-        DetailFailureState(message: ''),
-      ],
+      expect: () =>
+          <DetailState>[DetailLoadingState(), DetailFailureState(message: '')],
     );
   });
   group('Test [DetailFavoriteButtonPressedEvent] event', () {
     blocTest<DetailBloc, DetailState>("Emit success state when favorite",
-        build: () => DetailBloc(
-              useCases: _useCase,
-              services: _services,
-              userId: '',
-            ),
+        build: () =>
+            DetailBloc(useCases: _useCase, services: _services, userId: ''),
         act: (DetailBloc bloc) async {
           when(() => _services.favoriteAdd(
                 uid: '',
@@ -109,11 +91,8 @@ void main() {
 
     blocTest<DetailBloc, DetailState>(
       "Emit fail state when favorite",
-      build: () => DetailBloc(
-        useCases: _useCase,
-        services: _services,
-        userId: '',
-      ),
+      build: () =>
+          DetailBloc(useCases: _useCase, services: _services, userId: ''),
       act: (DetailBloc bloc) async {
         when(() => _services.favoriteAdd(
             uid: '',

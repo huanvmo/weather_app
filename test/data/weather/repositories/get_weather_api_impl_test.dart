@@ -24,7 +24,7 @@ void main() {
           () => _getDetailApi.getDetail("", ""),
         ).thenAnswer(
           (_) => Future.value(
-            DetailModel(),
+            const DetailModel(),
           ),
         );
         expect(
@@ -70,7 +70,7 @@ void main() {
           () => _getWeatherApi.getWeather(1, 1, ""),
         ).thenAnswer(
           (_) => Future.value(
-            WeatherModel(),
+            const WeatherModel(),
           ),
         );
         expect(
